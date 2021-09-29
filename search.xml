@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/07/02/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<span id="more"></span>
+
+
+
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>my-test-post</title>
+    <url>/2021/09/29/my-test-post/</url>
+    <content><![CDATA[<p>此处为摘要内容。</p>
+<span id="more"></span>
+
+
+
+
+
+<h1 id="26-管理事务处理"><a href="#26-管理事务处理" class="headerlink" title="26. 管理事务处理"></a>26. 管理事务处理</h1><br>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args)</span> </span>&#123;</span><br><span class="line">        system.out.println(<span class="string">&quot;Hello, world!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>语句测试</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM customers;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM customers;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ul>
+<li><p><strong>事务处理（transactionprocessing）</strong>：可以用来维护数据库的完整性，它保证成批的MySQL操作要么完全执行，要么完全不执行。</p>
+</li>
+<li><p>控制事务处理：</p>
+<ul>
+<li><p>事务启动</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">START TRANSACTION;	-- 开启事务</span><br></pre></td></tr></table></figure></li>
+<li><p>回退（撤销）到事务启动前的状态</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">START TRANSACTION;	-- 开启事务</span><br><span class="line">DELETE FROM ordertotals;	-- 删除表所有行</span><br><span class="line">ROLLBACK;		-- 回退</span><br></pre></td></tr></table></figure></li>
+<li><p>部分提交（部分回退）：使用保留点</p>
+<ul>
+<li><p>~~~mysql<br>SAVEPOINT delete1;<br>…<br>ROLLBACK TO delete1;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* 更改默认的提交行为</span><br><span class="line"></span><br><span class="line">  * ~~~mysql</span><br><span class="line">    SET autocommit=0;	-- 设置为默认不提交</span><br><span class="line">    SET autocommit=1;	-- 设置为默认提交</span><br></pre></td></tr></table></figure></li>
+<li><p>注意：<code>autocommit</code> 标志是针对每个==连接==而不是服务器的。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><br><br><br><br><br><br></p>
+<h2 id="26-1-事务处理"><a href="#26-1-事务处理" class="headerlink" title="26.1 事务处理"></a>26.1 事务处理</h2><blockquote>
+<p><strong>并非所有引擎都支持事务处理</strong>     MySQL支持几种基本的数据库引擎。<code>MyISAM</code> 和<code>InnoDB</code> 是两种最常使用的引擎。前者不支持明确的事务处理管理，而后者支持。如果你的应用中需要事务处理功能，则一定要使用正确的引擎类型。</p>
+</blockquote>
+<p><strong>事务处理（transactionprocessing）</strong>：可以用来维护数据库的完整性，它保证成批的MySQL操作要么完全执行，要么完全不执行。</p>
+<p>事务处理是一种机制，用来管理必须成批执行的MySQL操作，以保证数据库不包含不完整的操作结果。利用事务处理，可以保证一组操作不会中途停止，它们或者作为整体执行，或者完全不执行（除非明确指示）。如果没有错误发生，整组语句提交给（写到）数据库表。如果发生错误，则进行回退（撤销）以恢复数据库到某个已知且安全的状态。</p>
+<p>例：对比<strong>给系统添加订单</strong>流程无事务和有事务的系列操作。</p>
+<ul>
+<li>无事务<ol>
+<li>检查数据库中是否存在相应的客户（从<code>customers</code> 表查询），如果不存在，添加他/她。</li>
+<li>检索客户的ID。</li>
+<li>添加一行到<code>orders</code> 表，把它与客户ID关联。</li>
+<li>检索<code>orders</code> 表中赋予的新订单ID。</li>
+<li>对于订购的每个物品在<code>orderitems</code> 表中添加一行，通过检索出来的ID把它与<code>orders</code>表关联（以及通过产品ID与<code>products</code> 表关联）。</li>
+</ol>
+</li>
+<li>使用事务<ol>
+<li>检查数据库<code>customers</code>表中是否存在相应的客户，如果不存在，添加他/她。</li>
+<li>提交客户信息。</li>
+<li>检索客户的ID。</li>
+<li>添加一行到<code>orders</code> 表。</li>
+<li>如果在添加行到<code>orders</code> 表时出现故障，回退。</li>
+<li>检索<code>orders</code> 表中赋予的新订单ID。</li>
+<li>对于订购的每项物品，添加新行到<code>orderitems</code> 表。</li>
+<li>如果在添加新行到<code>orderitems</code> 时出现故障，回退所有添加的<code>orderitems</code> 行和<code>orders</code> 行。</li>
+<li>提交订单信息。</li>
+</ol>
+</li>
+</ul>
+<p>事务的几个关键术语：</p>
+<ul>
+<li><strong>事务（transaction）</strong> ：指一组SQL语句；</li>
+<li><strong>回退（rollback）</strong> ：指撤销指定SQL语句的过程；</li>
+<li><strong>提交（commit）</strong> ：指将未存储的SQL语句结果写入数据库表；</li>
+<li><strong>保留点（savepoint）</strong> 指事务处理中设置的临时占位符（place-holder），你可以对它发布回退（与回退整个事务处理不同）。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>测试_子目录1</category>
+        <category>测试_子目录2</category>
+        <category>测试_子目录3</category>
+      </categories>
+      <tags>
+        <tag>测试_标签1</tag>
+        <tag>测试_标签2</tag>
+        <tag>测试_标签3</tag>
+      </tags>
+  </entry>
+</search>
