@@ -1082,33 +1082,33 @@
 <h3 id="9-2-1-基本字符匹配"><a href="#9-2-1-基本字符匹配" class="headerlink" title="9.2.1 基本字符匹配"></a>9.2.1 基本字符匹配</h3><p>从一个简单的例子开始。</p>
 <p><strong>例1</strong>：检索列 prod_name 包含文本 ‘1000’ 的所有行</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT prod_name FROM products WHERE prod_name REGEXP &#x27;1000&#x27; ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> products </span><br><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="string">&#x27;1000&#x27;</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------+| prod_name    |+--------------+| JetPack 1000 |+--------------+1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------+</span><br><span class="line">| prod_name    |</span><br><span class="line">+--------------+</span><br><span class="line">| JetPack 1000 |</span><br><span class="line">+--------------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>从格式上看，仅仅是关键字 <strong>LIKE</strong> 被 <strong>REGEXP</strong> 替代。该语句告诉MySQL：<strong>REGEXP</strong> 后所跟的东西作为<strong>正则表达式</strong>（与文字正文1000匹配的一个正则表达式）处理。</p>
 <p><br><br></p>
 <p><strong>例2</strong>：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT prod_name FROM products WHERE prod_name REGEXP &#x27;.000&#x27; ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> products </span><br><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="string">&#x27;.000&#x27;</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------+| prod_name    |+--------------+| JetPack 1000 || JetPack 2000 |+--------------+2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------+</span><br><span class="line">| prod_name    |</span><br><span class="line">+--------------+</span><br><span class="line">| JetPack 1000 |</span><br><span class="line">| JetPack 2000 |</span><br><span class="line">+--------------+</span><br><span class="line">2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
-<p>这里使用了正则表达式 <strong>.000</strong> 。**<code>.</code>** 是正则表达式语言中一个特殊的字符，==表示匹配任意一个字符==，因此，1000 和 2000 都匹配且返回。</p>
+<p>这里使用了正则表达式 <strong>.000</strong> 。**<code>.</code>** 是正则表达式语言中一个特殊的字符，<font color="ffa600">表示匹配任意一个字符</font>，因此，1000 和 2000 都匹配且返回。</p>
 <p>当然，例2也可以用 LIKE 和通配符来完成。语句如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT prod_name FROM products WHERE prod_name LIKE &#x27;%000&#x27; ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> products </span><br><span class="line"><span class="keyword">WHERE</span> prod_name <span class="keyword">LIKE</span> <span class="string">&#x27;%000&#x27;</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure>
 
 <br>
 
 <h4 id="LIKE-与-REGEXP"><a href="#LIKE-与-REGEXP" class="headerlink" title="LIKE 与 REGEXP"></a>LIKE 与 REGEXP</h4><blockquote>
 <p><strong><code>LIKE</code> 与 <code>REGEXP</code></strong> 之间有一个重要差别。以如下两条语句为例。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT prod_name FROM products WHERE prod_name LIKE &#x27;1000&#x27; ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> products </span><br><span class="line"><span class="keyword">WHERE</span> prod_name <span class="keyword">LIKE</span> <span class="string">&#x27;1000&#x27;</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT prod_name FROM products WHERE prod_name REGEXP &#x27;1000&#x27; ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> products </span><br><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="string">&#x27;1000&#x27;</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure>
 
 <p>如果执行上述两条语句，会发现第一条语句不返回数据，而第二条语句返回一行。</p>
 <ul>
@@ -1123,44 +1123,44 @@
 <h4 id="匹配不区分大小写"><a href="#匹配不区分大小写" class="headerlink" title="匹配不区分大小写"></a>匹配不区分大小写</h4><blockquote>
 <p>MySQL中的正则表达式匹配（自版本3.23.4后）不区分大小写。</p>
 <p>为区分大小写，可使用 <code>BINARY</code> 关键字。如</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">WHERE prod_name REGEXP BINARY &#x27;JetPack .000&#x27;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="type">BINARY</span> <span class="string">&#x27;JetPack .000&#x27;</span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <p><br><br><br></p>
 <h3 id="9-2-2-进行-OR-匹配"><a href="#9-2-2-进行-OR-匹配" class="headerlink" title="9.2.2 进行 OR 匹配"></a>9.2.2 进行 OR 匹配</h3><p>为搜索两个串之一（或为一个串，或为另一个串），使用 <strong><code>|</code></strong> ，举例如下。</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT prod_nameFROM products WHERE prod_name REGEXP &#x27;1000|2000&#x27; ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name</span><br><span class="line"><span class="keyword">FROM</span> products </span><br><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="string">&#x27;1000|2000&#x27;</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------+| prod_name    |+--------------+| JetPack 1000 || JetPack 2000 |+--------------+2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------+</span><br><span class="line">| prod_name    |</span><br><span class="line">+--------------+</span><br><span class="line">| JetPack 1000 |</span><br><span class="line">| JetPack 2000 |</span><br><span class="line">+--------------+</span><br><span class="line">2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>语句使用了正则表达式 <strong><code>1000|2000</code><strong>。</strong><code>|</code></strong> 为正则表达式的 <code>OR</code> 操作符。它表示匹配其中之一。</p>
 <blockquote>
 <p><strong>两个以上的 <code>OR</code> 条件</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">WHERE prod_name REGEXP &#x27;1000|2000|3000&#x27;;	-- 将匹配1000或2000或3000</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="string">&#x27;1000|2000|3000&#x27;</span>;	<span class="comment">-- 将匹配1000或2000或3000</span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <p><br><br><br></p>
 <h3 id="9-2-3-匹配几个字符之一"><a href="#9-2-3-匹配几个字符之一" class="headerlink" title="9.2.3 匹配几个字符之一"></a>9.2.3 匹配几个字符之一</h3><p>要匹配某一组字符中的任何单一字符没通过 <strong>[]</strong> 实现。</p>
 <p>输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT prod_name FROM productsWHERE prod_name REGEXP &#x27;[123] Ton&#x27; ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> products</span><br><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="string">&#x27;[123] Ton&#x27;</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure>
 
 <p>输出</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-------------+| prod_name   |+-------------+| 1 ton anvil || 2 ton anvil |+-------------+2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-------------+</span><br><span class="line">| prod_name   |</span><br><span class="line">+-------------+</span><br><span class="line">| 1 ton anvil |</span><br><span class="line">| 2 ton anvil |</span><br><span class="line">+-------------+</span><br><span class="line">2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p>分析</p>
 <p>这里使用了正则表达式 <code>[123] Ton</code>。<code>[123]</code> 定义一组字符，它的意思是匹配1或2或3，因此，1 ton 和 2 ton 都匹配且返回。</p>
 <p><code>[]</code>是另一种形式的 <code>OR</code> 语句。事实上，正则表达式 <strong><code>[123] Ton</code></strong> 是 <strong><code>[1|2|3] Ton</code></strong> 的缩写。也可以使用后者。</p>
 <p><strong><code>[]</code></strong> 规定了内部 <strong><code>|</code></strong> 字符（如果有的话）的作用域。</p>
 <p>字符集合也可以被否定，及匹配时排除指定的字符。使用方法：在集合开始处加一个 <strong><code>^</code></strong> 即可。例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">WHERE prod_name REGEXP &#x27;[^123] Ton&#x27;	-- 匹配除这些字符外的任何东西</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="string">&#x27;[^123] Ton&#x27;</span>	<span class="comment">-- 匹配除这些字符外的任何东西</span></span><br></pre></td></tr></table></figure>
 
 <p><br><br><br></p>
 <h3 id="9-2-4-匹配范围"><a href="#9-2-4-匹配范围" class="headerlink" title="9.2.4 匹配范围"></a>9.2.4 匹配范围</h3><p>可以用 <strong>-</strong> 来定义一个范围。举例如下</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT prod_name FROM products WHERE prod_name REGEXP &#x27;[1-5] Ton&#x27; ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> products </span><br><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="string">&#x27;[1-5] Ton&#x27;</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------+| prod_name    |+--------------+| .5 ton anvil || 1 ton anvil  || 2 ton anvil  |+--------------+3 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------+</span><br><span class="line">| prod_name    |</span><br><span class="line">+--------------+</span><br><span class="line">| .5 ton anvil |</span><br><span class="line">| 1 ton anvil  |</span><br><span class="line">| 2 ton anvil  |</span><br><span class="line">+--------------+</span><br><span class="line">3 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>此处 <strong>[1-5]</strong> 定义了一个范围。**’[1-5] Ton’** 作为正则表达式进行匹配。</p>
@@ -1168,10 +1168,10 @@
 <h3 id="9-2-5-匹配特殊字符"><a href="#9-2-5-匹配特殊字符" class="headerlink" title="9.2.5 匹配特殊字符"></a>9.2.5 匹配特殊字符</h3><p>如果想匹配具有特殊含义的特殊字符【如 . 、[] 、| 、和 - 等】，需要用 <code>\\</code>为前导。</p>
 <p><strong>例</strong>：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT vend_name FROM vendors WHERE vend_name REGEXP &#x27;\\.&#x27; ORDER BY vend_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> vend_name </span><br><span class="line"><span class="keyword">FROM</span> vendors </span><br><span class="line"><span class="keyword">WHERE</span> vend_name REGEXP <span class="string">&#x27;\\.&#x27;</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------+| vend_name    |+--------------+| Furball Inc. |+--------------+1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------+</span><br><span class="line">| vend_name    |</span><br><span class="line">+--------------+</span><br><span class="line">| Furball Inc. |</span><br><span class="line">+--------------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>原理为<strong>转义（escaping）</strong>。</p>
@@ -1279,7 +1279,7 @@
 </ul>
 </li>
 </ul>
-<p>这可以用下表列出的==<strong>正则表达式重复元字符</strong>==来完成。</p>
+<p>这可以用下表列出的<font color="ffa600"><strong>正则表达式重复元字符</strong></font>来完成。</p>
 <table>
 <thead>
 <tr>
@@ -1315,10 +1315,10 @@
 <p><br><br></p>
 <p><strong>例1</strong>：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT prod_name FROM products WHERE prod_name REGEXP &#x27;\\([0-9] sticks?\\)&#x27; ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> products </span><br><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="string">&#x27;\\([0-9] sticks?\\)&#x27;</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+| prod_name      |+----------------+| TNT (1 stick)  || TNT (5 sticks) |+----------------+2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+</span><br><span class="line">| prod_name      |</span><br><span class="line">+----------------+</span><br><span class="line">| TNT (1 stick)  |</span><br><span class="line">| TNT (5 sticks) |</span><br><span class="line">+----------------+</span><br><span class="line">2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>正则表达式<code>\\([0-9]sticks?\\)</code> 需要解说一下。<code>\\(</code> 匹配(，<code>[0-9]</code> 匹配任意数字（这个例子中为1和5），<code>sticks?</code> 匹配<code>stick</code> 和<code>sticks</code> （<code>s</code> 后的<code>?</code> 使<code>s</code> 可选，因为<code>?</code> 匹配它前面的任何字符的0次或1次出现），<code>\\)</code> 匹配<code>)</code> 。没有<code>?</code> ，匹配<code>stick</code> 和<code>sticks</code> 会非常困难。</p>
@@ -1326,16 +1326,16 @@
 
 <p><strong>例2</strong>：匹配连在一起的4位数字</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT prod_name FROM productsWHERE prod_name REGEXP &#x27;[[:digit:]]&#123;4&#125;&#x27; ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> products</span><br><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="string">&#x27;[[:digit:]]&#123;4&#125;&#x27;</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------+| prod_name    |+--------------+| JetPack 1000 || JetPack 2000 |+--------------+2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------+</span><br><span class="line">| prod_name    |</span><br><span class="line">+--------------+</span><br><span class="line">| JetPack 1000 |</span><br><span class="line">| JetPack 2000 |</span><br><span class="line">+--------------+</span><br><span class="line">2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p><strong><code>[[:digit:]]</code><strong>匹配任意数字，因为它为数字的一个集合。</strong><code>&#123;4&#125;</code><strong>要求它</strong>前面的字符</strong>（这里即任意数字）<strong>出现4次</strong>，所以<code>[[:digit:]]&#123;4&#125;</code>匹配连在一起的任意4位数字。</p>
 <p>注：上面的例子也可以用如下语句实现</p>
 <p>输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT prod_name FROM productsWHERE prod_name REGEXP &#x27;[0-9][0-9][0-9][0-9]&#x27; ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> products</span><br><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="string">&#x27;[0-9][0-9][0-9][0-9]&#x27;</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure>
 
 <p><br><br><br></p>
 <h3 id="9-2-8-定位符"><a href="#9-2-8-定位符" class="headerlink" title="9.2.8 定位符"></a>9.2.8 定位符</h3><ul>
@@ -1372,38 +1372,38 @@
 <p><br><br></p>
 <p><strong>例</strong>：找出以一个数（或小数点）<strong>开始</strong>的所有产品。</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT prod_name FROM products WHERE prod_name REGEXP &#x27;^[0-9\\.]&#x27; ORDER BY prod_name;	-- -- 匹配以数字或点开始的所有串</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> products </span><br><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="string">&#x27;^[0-9\\.]&#x27;</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;	<span class="comment">-- -- 匹配以数字或点开始的所有串</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------+| prod_name    |+--------------+| .5 ton anvil || 1 ton anvil  || 2 ton anvil  |+--------------+3 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------+</span><br><span class="line">| prod_name    |</span><br><span class="line">+--------------+</span><br><span class="line">| .5 ton anvil |</span><br><span class="line">| 1 ton anvil  |</span><br><span class="line">| 2 ton anvil  |</span><br><span class="line">+--------------+</span><br><span class="line">3 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p><code>^</code> 匹配串的开始。因此，<code>^[0-9\\.]</code> 只在.或任意数字为串中第一个字符时才匹配它们。没有<code>^</code> ，则还要多检索出4个别的行（那些中间有数字的行）。</p>
 <p><br><br></p>
 <h4 id="附1：-的双重用途"><a href="#附1：-的双重用途" class="headerlink" title="附1：^ 的双重用途"></a>附1：<code>^</code> 的双重用途</h4><blockquote>
 <p><strong>^ 的双重用途</strong>：^ 有两种用法。在集合中（用<code>[和]</code>定义），用它来<strong>否定该集合</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">WHERE prod_name REGEXP &#x27;[^123] Ton&#x27;	-- 匹配除这些字符外的任何东西</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="string">&#x27;[^123] Ton&#x27;</span>	<span class="comment">-- 匹配除这些字符外的任何东西</span></span><br></pre></td></tr></table></figure>
 
 <p>否则，用来指串的开始处。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">WHERE prod_name REGEXP &#x27;^[0-9\\.]&#x27;	-- 匹配以数字或点开始的所有串</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="string">&#x27;^[0-9\\.]&#x27;</span>	<span class="comment">-- 匹配以数字或点开始的所有串</span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <h4 id="附2：使REGEXP起类似LIKE的作用"><a href="#附2：使REGEXP起类似LIKE的作用" class="headerlink" title="附2：使REGEXP起类似LIKE的作用"></a>附2：使<code>REGEXP</code>起类似<code>LIKE</code>的作用</h4><blockquote>
 <p><code>LIKE</code>和<code>REGEXP</code>不同之处在于：<code>LIKE</code>匹配整个串而<code>REGEXP</code>匹配子串。</p>
 <p>利用定位符，通过**<code>^</code>开始<strong>每个表达式，用</strong><code>$</code>结束**每个表达式，可以使<code>REGEXP</code>与<code>LIKE</code>一样。</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT prod_id, prod_name FROM products WHERE prod_name LIKE &#x27;_ ton anvil&#x27; ORDER BY prod_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_id, prod_name </span><br><span class="line"><span class="keyword">FROM</span> products </span><br><span class="line"><span class="keyword">WHERE</span> prod_name <span class="keyword">LIKE</span> <span class="string">&#x27;_ ton anvil&#x27;</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_id;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-- 实现1SELECT prod_id, prod_name FROM products WHERE prod_name REGEXP &#x27;^. ton anvil$&#x27;ORDER BY prod_id;-- 实现2SELECT prod_id, prod_name FROM products WHERE prod_name REGEXP &#x27;^[[:digit:]]&#123;1&#125; ton anvil$&#x27;ORDER BY prod_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 实现1</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_id, prod_name </span><br><span class="line"><span class="keyword">FROM</span> products </span><br><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="string">&#x27;^. ton anvil$&#x27;</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_id;</span><br><span class="line"><span class="comment">-- 实现2</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_id, prod_name </span><br><span class="line"><span class="keyword">FROM</span> products </span><br><span class="line"><span class="keyword">WHERE</span> prod_name REGEXP <span class="string">&#x27;^[[:digit:]]&#123;1&#125; ton anvil$&#x27;</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_id;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出（一致）</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">+---------+-------------+| prod_id | prod_name   |+---------+-------------+| ANV02   | 1 ton anvil || ANV03   | 2 ton anvil |+---------+-------------+2 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+-------------+</span><br><span class="line">| prod_id | prod_name   |</span><br><span class="line">+---------+-------------+</span><br><span class="line">| ANV02   | 1 ton anvil |</span><br><span class="line">| ANV03   | 2 ton anvil |</span><br><span class="line">+---------+-------------+</span><br><span class="line">2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 </blockquote>
 <h4 id="附3：简单的正则表达式测试"><a href="#附3：简单的正则表达式测试" class="headerlink" title="附3：简单的正则表达式测试"></a>附3：简单的正则表达式测试</h4><blockquote>
 <p>可以在不使用数据库表的情况下用SELECT来测试正则表达式。REGEXP检查总是返回<strong>0（没有匹配）</strong>或<strong>1（匹配）</strong>。可以用带文字穿的REGEXP来测试表达式，并试验。相应语法如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT &#x27;hello&#x27; REGEXP &#x27;[0-9]&#x27;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="string">&#x27;hello&#x27;</span> REGEXP <span class="string">&#x27;[0-9]&#x27;</span>;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+------------------------+| <span class="string">&#x27;hello&#x27;</span> REGEXP <span class="string">&#x27;[0-9]&#x27;</span> |+------------------------+|                      0 |+------------------------+1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+------------------------+</span><br><span class="line">| <span class="string">&#x27;hello&#x27;</span> REGEXP <span class="string">&#x27;[0-9]&#x27;</span> |</span><br><span class="line">+------------------------+</span><br><span class="line">|                      0 |</span><br><span class="line">+------------------------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p>因为文本’hello’中没有数字，所以返回0。</p>
 </blockquote>
@@ -1446,10 +1446,10 @@
 <p><strong>MySQL的不同之处</strong>：许多DBMS使用+或 || 实现拼接，MySQL使用Concat()函数实现。</p>
 </blockquote>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT Concat(vend_name, &#x27; (&#x27;, vend_country, &#x27;)&#x27;) FROM vendors ORDER BY vend_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Concat(vend_name, <span class="string">&#x27; (&#x27;</span>, vend_country, <span class="string">&#x27;)&#x27;</span>) </span><br><span class="line"><span class="keyword">FROM</span> vendors </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------------------------------------+| Concat(vend_name, <span class="string">&#x27; (&#x27;</span>, vend_country, <span class="string">&#x27;)&#x27;</span>) |+--------------------------------------------+| ACME (USA)                                 || Anvils R Us (USA)                          || Furball Inc. (USA)                         || Jet Set (England)                          || Jouets Et Ours (France)                    || LT Supplies (USA)                          |+--------------------------------------------+6 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------------------------------------------+</span><br><span class="line">| Concat(vend_name, <span class="string">&#x27; (&#x27;</span>, vend_country, <span class="string">&#x27;)&#x27;</span>) |</span><br><span class="line">+--------------------------------------------+</span><br><span class="line">| ACME (USA)                                 |</span><br><span class="line">| Anvils R Us (USA)                          |</span><br><span class="line">| Furball Inc. (USA)                         |</span><br><span class="line">| Jet Set (England)                          |</span><br><span class="line">| Jouets Et Ours (France)                    |</span><br><span class="line">| LT Supplies (USA)                          |</span><br><span class="line">+--------------------------------------------+</span><br><span class="line">6 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>Concat()方法：用于拼接串，子串用逗号分隔，拼接后作为单个长串。</p>
@@ -1464,7 +1464,7 @@
 </ul>
 <p>在第8节中提到通过<strong>删除数据右侧多余的空格</strong>来整理数据，可以使用MySQL的 <strong>RTrim()</strong> 函数来实现。如下所示：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT Concat(RTrim(vend_name), &#x27; (&#x27;, RTrim(vend_country), &#x27;)&#x27;) FROM vendors ORDER BY vend_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Concat(RTrim(vend_name), <span class="string">&#x27; (&#x27;</span>, RTrim(vend_country), <span class="string">&#x27;)&#x27;</span>) </span><br><span class="line"><span class="keyword">FROM</span> vendors </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name;</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <ul>
@@ -1475,10 +1475,10 @@
 <p>为解决该问题，SQL支持列别名。别名（alias）是一个字段或值的替换名。别名用AS关键字赋予。</p>
 <p><strong>例</strong>：对上一个搜索结果使用别名</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT Concat(RTrim(vend_name), &#x27; (&#x27;, RTrim(vend_country), &#x27;)&#x27;)  AS vend_title FROM vendors ORDER BY vend_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Concat(RTrim(vend_name), <span class="string">&#x27; (&#x27;</span>, RTrim(vend_country), <span class="string">&#x27;)&#x27;</span>)  <span class="keyword">AS</span> vend_title </span><br><span class="line"><span class="keyword">FROM</span> vendors </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-------------------------+| vend_title              |+-------------------------+| ACME (USA)              || Anvils R Us (USA)       || Furball Inc. (USA)      || Jet Set (England)       || Jouets Et Ours (France) || LT Supplies (USA)       |+-------------------------+6 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-------------------------+</span><br><span class="line">| vend_title              |</span><br><span class="line">+-------------------------+</span><br><span class="line">| ACME (USA)              |</span><br><span class="line">| Anvils R Us (USA)       |</span><br><span class="line">| Furball Inc. (USA)      |</span><br><span class="line">| Jet Set (England)       |</span><br><span class="line">| Jouets Et Ours (France) |</span><br><span class="line">| LT Supplies (USA)       |</span><br><span class="line">+-------------------------+</span><br><span class="line">6 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p><code>AS 别名</code> 指示 SQL 创建一个包含指定计算的名为 <code>别名</code> 的计算字段。任何客户机应用都可以按名引用这个列，就像它是一个实际的表列一样。</p>
@@ -1497,17 +1497,17 @@
 <h2 id="10-3-执行算术计算"><a href="#10-3-执行算术计算" class="headerlink" title="10.3 执行算术计算"></a>10.3 执行算术计算</h2><p>计算字段的另一个常见用途：对检索出的数据进行算术计算。</p>
 <p>例：orders 表中包含收到的所有订单，orderitems表包含每个订单的各项物品。下面语句检索订单号 2005 中的所有物品</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT prod_id, quantity, item_price FROM orderitems WHERE order_num = 20005;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_id, quantity, item_price </span><br><span class="line"><span class="keyword">FROM</span> orderitems </span><br><span class="line"><span class="keyword">WHERE</span> order_num <span class="operator">=</span> <span class="number">20005</span>;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+----------+------------+| prod_id | quantity | item_price |+---------+----------+------------+| ANV01   |       10 |       5.99 || ANV02   |        3 |       9.99 || TNT2    |        5 |      10.00 || FB      |        1 |      10.00 |+---------+----------+------------+4 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+----------+------------+</span><br><span class="line">| prod_id | quantity | item_price |</span><br><span class="line">+---------+----------+------------+</span><br><span class="line">| ANV01   |       10 |       5.99 |</span><br><span class="line">| ANV02   |        3 |       9.99 |</span><br><span class="line">| TNT2    |        5 |      10.00 |</span><br><span class="line">| FB      |        1 |      10.00 |</span><br><span class="line">+---------+----------+------------+</span><br><span class="line">4 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p>在后面增加一列汇总物品价格（单价乘以订购数量）</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT 	prod_id, 		quantity, 		item_price, 		quantity*item_price AS expanded_price FROM orderitems WHERE order_num = 20005;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 	prod_id, </span><br><span class="line">		quantity, </span><br><span class="line">		item_price, </span><br><span class="line">		quantity<span class="operator">*</span>item_price <span class="keyword">AS</span> expanded_price </span><br><span class="line"><span class="keyword">FROM</span> orderitems </span><br><span class="line"><span class="keyword">WHERE</span> order_num <span class="operator">=</span> <span class="number">20005</span>;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+----------+------------+----------------+| prod_id | quantity | item_price | expanded_price |+---------+----------+------------+----------------+| ANV01   |       10 |       5.99 |          59.90 || ANV02   |        3 |       9.99 |          29.97 || TNT2    |        5 |      10.00 |          50.00 || FB      |        1 |      10.00 |          10.00 |+---------+----------+------------+----------------+4 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+----------+------------+----------------+</span><br><span class="line">| prod_id | quantity | item_price | expanded_price |</span><br><span class="line">+---------+----------+------------+----------------+</span><br><span class="line">| ANV01   |       10 |       5.99 |          59.90 |</span><br><span class="line">| ANV02   |        3 |       9.99 |          29.97 |</span><br><span class="line">| TNT2    |        5 |      10.00 |          50.00 |</span><br><span class="line">| FB      |        1 |      10.00 |          10.00 |</span><br><span class="line">+---------+----------+------------+----------------+</span><br><span class="line">4 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>客户机应用现在可以正常使用新计算列 expanded_price。</p>
@@ -1583,10 +1583,10 @@
 <p><br><br><br></p>
 <h3 id="11-2-1-文本处理函数"><a href="#11-2-1-文本处理函数" class="headerlink" title="11.2.1 文本处理函数"></a>11.2.1 文本处理函数</h3><p>例：使用Upper() 函数转大写。</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT vend_name, Upper(vend_name) AS vend_name_upcase FROM vendors  ORDER BY vend_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> vend_name, <span class="built_in">Upper</span>(vend_name) <span class="keyword">AS</span> vend_name_upcase </span><br><span class="line"><span class="keyword">FROM</span> vendors  </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+------------------+| vend_name      | vend_name_upcase |+----------------+------------------+| ACME           | ACME             || Anvils R Us    | ANVILS R US      || Furball Inc.   | FURBALL INC.     || Jet Set        | JET SET          || Jouets Et Ours | JOUETS ET OURS   || LT Supplies    | LT SUPPLIES      |+----------------+------------------+6 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+------------------+</span><br><span class="line">| vend_name      | vend_name_upcase |</span><br><span class="line">+----------------+------------------+</span><br><span class="line">| ACME           | ACME             |</span><br><span class="line">| Anvils R Us    | ANVILS R US      |</span><br><span class="line">| Furball Inc.   | FURBALL INC.     |</span><br><span class="line">| Jet Set        | JET SET          |</span><br><span class="line">| Jouets Et Ours | JOUETS ET OURS   |</span><br><span class="line">| LT Supplies    | LT SUPPLIES      |</span><br><span class="line">+----------------+------------------+</span><br><span class="line">6 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
 
 <p><br><br></p>
 <p><strong>表11-1 常用的文本处理函数</strong></p>
@@ -1723,22 +1723,22 @@
 <li><p>注意：</p>
 <ul>
 <li><p>MySQL使用的日期格式：<code>yyyy-mm-dd</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2005-09-01	-- 格式举例</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="number">2005</span><span class="number">-09</span><span class="number">-01</span>	<span class="comment">-- 格式举例</span></span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ul>
 <p><br><br></p>
 <p><strong>例1</strong>：基本日期</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT cust_id, order_num FROM orders WHERE order_date = &#x27;2005-09-01&#x27;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> cust_id, order_num </span><br><span class="line"><span class="keyword">FROM</span> orders </span><br><span class="line"><span class="keyword">WHERE</span> order_date <span class="operator">=</span> <span class="string">&#x27;2005-09-01&#x27;</span>;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+-----------+| cust_id | order_num |+---------+-----------+|   10001 |     20005 |+---------+-----------+1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+-----------+</span><br><span class="line">| cust_id | order_num |</span><br><span class="line">+---------+-----------+</span><br><span class="line">|   10001 |     20005 |</span><br><span class="line">+---------+-----------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>使用字符串比较并不可靠【因为不清楚列 order_date 的格式是否仅为 yyyy-mm–dd 】，更可靠的办法是使用 <strong>Date(order_date)</strong> 函数指示MySQL<strong>仅提取 order_date 列的日期部分</strong>，并<strong>进行比较</strong>。修改如下</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT cust_id, order_num FROM orders WHERE Date(order_date) = &#x27;2005-09-01&#x27;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> cust_id, order_num </span><br><span class="line"><span class="keyword">FROM</span> orders </span><br><span class="line"><span class="keyword">WHERE</span> <span class="type">Date</span>(order_date) <span class="operator">=</span> <span class="string">&#x27;2005-09-01&#x27;</span>;</span><br></pre></td></tr></table></figure>
 
 <p><br><br></p>
 <blockquote>
@@ -1750,14 +1750,14 @@
 <p><strong>例2</strong>：检索2005年9月下的所有订单。</p>
 <p>方法1：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT cust_id, order_num FROM orders WHERE Date(order_date) BETWEEN &#x27;2005-09-01&#x27; AND &#x27;2005-09-30&#x27;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> cust_id, order_num </span><br><span class="line"><span class="keyword">FROM</span> orders </span><br><span class="line"><span class="keyword">WHERE</span> <span class="type">Date</span>(order_date) <span class="keyword">BETWEEN</span> <span class="string">&#x27;2005-09-01&#x27;</span> <span class="keyword">AND</span> <span class="string">&#x27;2005-09-30&#x27;</span>;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+-----------+| cust_id | order_num |+---------+-----------+|   10001 |     20005 ||   10003 |     20006 ||   10004 |     20007 |+---------+-----------+3 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+-----------+</span><br><span class="line">| cust_id | order_num |</span><br><span class="line">+---------+-----------+</span><br><span class="line">|   10001 |     20005 |</span><br><span class="line">|   10003 |     20006 |</span><br><span class="line">|   10004 |     20007 |</span><br><span class="line">+---------+-----------+</span><br><span class="line">3 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p>方法2：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT cust_id, order_num FROM orders WHERE Year(order_date) = 2005 AND Month(order_date) = 9;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> cust_id, order_num </span><br><span class="line"><span class="keyword">FROM</span> orders </span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">Year</span>(order_date) <span class="operator">=</span> <span class="number">2005</span> <span class="keyword">AND</span> <span class="keyword">Month</span>(order_date) <span class="operator">=</span> <span class="number">9</span>;</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>Year() 从日期中返回年份，Month() 从日期中返回月份。</p>
@@ -1867,18 +1867,18 @@
 <h3 id="12-1-1-AVG-函数"><a href="#12-1-1-AVG-函数" class="headerlink" title="12.1.1 AVG()函数"></a>12.1.1 AVG()函数</h3><p>AVG()可用来返回所有列的平均值，也可用来返回特定列或行的平均值。</p>
 <p><strong>例1</strong>：使用AVG()返回products表中所有产品的平均价格</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT AVG(prod_price) AS avg_price FROM products;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">AVG</span>(prod_price) <span class="keyword">AS</span> avg_price </span><br><span class="line"><span class="keyword">FROM</span> products;</span><br></pre></td></tr></table></figure>
 
 <p>输出</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-----------+| avg_price |+-----------+| 16.133571 |+-----------+1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-----------+</span><br><span class="line">| avg_price |</span><br><span class="line">+-----------+</span><br><span class="line">| 16.133571 |</span><br><span class="line">+-----------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><br><br></p>
 <p><strong>例2</strong>：确定特定行或列的平均值</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT AVG(prod_price) AS avg_price FROM productsWHERE vend_id = 1003; </span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">AVG</span>(prod_price) <span class="keyword">AS</span> avg_price </span><br><span class="line"><span class="keyword">FROM</span> products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> <span class="number">1003</span>; </span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-----------+| avg_price |+-----------+| 13.212857 |+-----------+1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-----------+</span><br><span class="line">| avg_price |</span><br><span class="line">+-----------+</span><br><span class="line">| 13.212857 |</span><br><span class="line">+-----------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><br><br></p>
 <blockquote>
@@ -1897,19 +1897,19 @@
 <p><br><br></p>
 <p><strong>例1</strong>：返回 customers 表中客户的总数</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT COUNT(*) AS num_custFROM customers;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> num_cust</span><br><span class="line"><span class="keyword">FROM</span> customers;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------+| num_cust |+----------+|        5 |+----------+1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------+</span><br><span class="line">| num_cust |</span><br><span class="line">+----------+</span><br><span class="line">|        5 |</span><br><span class="line">+----------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>利用COUNT(*)计数，不管行中各列有什么值。</p>
 <p><strong>例2</strong>：对表中具有电子邮件地址的客户计数</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT COUNT(cust_email) AS num_cust FROM customers;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(cust_email) <span class="keyword">AS</span> num_cust </span><br><span class="line"><span class="keyword">FROM</span> customers;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------+| num_cust |+----------+|        3 |+----------+1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------+</span><br><span class="line">| num_cust |</span><br><span class="line">+----------+</span><br><span class="line">|        3 |</span><br><span class="line">+----------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>此语句中，COUNT()函数指定了列名，则会忽略NULL值的列。</p>
@@ -1919,10 +1919,10 @@
 <p><br><br><br></p>
 <h3 id="12-1-3-MAX-函数"><a href="#12-1-3-MAX-函数" class="headerlink" title="12.1.3 MAX()函数"></a>12.1.3 MAX()函数</h3><p>MAX返回指定列中的最大值。MAX()要求指定列名</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT MAX(prod_price) AS max_price FROM products;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">MAX</span>(prod_price) <span class="keyword">AS</span> max_price </span><br><span class="line"><span class="keyword">FROM</span> products;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-----------+| max_price |+-----------+|     55.00 |+-----------+1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-----------+</span><br><span class="line">| max_price |</span><br><span class="line">+-----------+</span><br><span class="line">|     55.00 |</span><br><span class="line">+-----------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p><strong>对非数值数据使用MAX()</strong>    在用于文本数据时，如果数据按相应的列排序，则MAX()返回最后一行。</p>
@@ -1936,10 +1936,10 @@
 </ul>
 <p><strong>例</strong>：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT MIN(prod_price) AS min_price FROM products;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">MIN</span>(prod_price) <span class="keyword">AS</span> min_price </span><br><span class="line"><span class="keyword">FROM</span> products;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-----------+| min_price |+-----------+|      2.50 |+-----------+1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-----------+</span><br><span class="line">| min_price |</span><br><span class="line">+-----------+</span><br><span class="line">|      2.50 |</span><br><span class="line">+-----------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><br><br></p>
 <blockquote>
@@ -1954,17 +1954,17 @@
 </ul>
 <p><strong>例1</strong>：检索 orderitems 表订单号 order_num 为20005的 quantity 列总数。</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT SUM(quantity) AS items_quantity FROM orderitems WHERE order_num = 20005;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">SUM</span>(quantity) <span class="keyword">AS</span> items_quantity </span><br><span class="line"><span class="keyword">FROM</span> orderitems </span><br><span class="line"><span class="keyword">WHERE</span> order_num <span class="operator">=</span> <span class="number">20005</span>;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+| items_quantity |+----------------+|             19 |+----------------+1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+</span><br><span class="line">| items_quantity |</span><br><span class="line">+----------------+</span><br><span class="line">|             19 |</span><br><span class="line">+----------------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>例2</strong>：合计计算数值</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT SUM(item_price*quantity) AS total_price FROM orderitemsWHERE order_num = 2005;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">SUM</span>(item_price<span class="operator">*</span>quantity) <span class="keyword">AS</span> total_price </span><br><span class="line"><span class="keyword">FROM</span> orderitems</span><br><span class="line"><span class="keyword">WHERE</span> order_num <span class="operator">=</span> <span class="number">2005</span>;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-------------+| total_price |+-------------+|        NULL |+-------------+1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-------------+</span><br><span class="line">| total_price |</span><br><span class="line">+-------------+</span><br><span class="line">|        NULL |</span><br><span class="line">+-------------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><br><br></p>
 <blockquote>
@@ -1982,10 +1982,10 @@
 <p><br><br></p>
 <p><strong>例</strong>：使用AVG()函数 + DISTINCT 参数，只考虑不同的的价格</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT AVG(DISTINCT prod_price) AS avg_price FROM products WHERE vend_id = 1003;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT AVG(DISTINCT prod_price) AS avg_price </span><br><span class="line">FROM products </span><br><span class="line">WHERE vend_id = 1003;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-----------+| avg_price |+-----------+| 15.998000 |+-----------+1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-----------+</span><br><span class="line">| avg_price |</span><br><span class="line">+-----------+</span><br><span class="line">| 15.998000 |</span><br><span class="line">+-----------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
 
 <p><br><br></p>
 <h4 id="DISTINCT-只能用于列名"><a href="#DISTINCT-只能用于列名" class="headerlink" title="DISTINCT 只能用于列名"></a>DISTINCT 只能用于列名</h4><blockquote>
@@ -1995,10 +1995,10 @@
 <h2 id="12-3-组合聚集函数"><a href="#12-3-组合聚集函数" class="headerlink" title="12.3 组合聚集函数"></a>12.3 组合聚集函数</h2><p>SELECT 语句可根据需要包含多个聚集函数</p>
 <p>例：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT COUNT(*) AS num_items,	MIN(prod_price) AS price_min, 	MAX(prod_price) AS price_max, 	AVG(prod_price) AS price_avg FROM products;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> num_items,</span><br><span class="line">	<span class="built_in">MIN</span>(prod_price) <span class="keyword">AS</span> price_min, </span><br><span class="line">	<span class="built_in">MAX</span>(prod_price) <span class="keyword">AS</span> price_max, </span><br><span class="line">	<span class="built_in">AVG</span>(prod_price) <span class="keyword">AS</span> price_avg </span><br><span class="line"><span class="keyword">FROM</span> products;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-----------+-----------+-----------+-----------+| num_items | price_min | price_max | price_avg |+-----------+-----------+-----------+-----------+|        14 |      2.50 |     55.00 | 16.133571 |+-----------+-----------+-----------+-----------+1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-----------+-----------+-----------+-----------+</span><br><span class="line">| num_items | price_min | price_max | price_avg |</span><br><span class="line">+-----------+-----------+-----------+-----------+</span><br><span class="line">|        14 |      2.50 |     55.00 | 16.133571 |</span><br><span class="line">+-----------+-----------+-----------+-----------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p><strong>注意</strong>：不同聚合函数调用之间要用<strong>逗号分隔</strong>。</p>
@@ -2025,10 +2025,10 @@
 <h2 id="13-2-创建分组"><a href="#13-2-创建分组" class="headerlink" title="13.2 创建分组"></a>13.2 创建分组</h2><p>分组通过SELECT语句的 GROUP BY 子句创建</p>
 <p><strong>例</strong>：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT vend_id, COUNT(*) AS num_prodsFROM productsGROUP BY vend_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> vend_id, <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> num_prods</span><br><span class="line"><span class="keyword">FROM</span> products</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> vend_id;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+-----------+| vend_id | num_prods |+---------+-----------+|    1001 |         3 ||    1002 |         2 ||    1003 |         7 ||    1005 |         2 |+---------+-----------+4 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+-----------+</span><br><span class="line">| vend_id | num_prods |</span><br><span class="line">+---------+-----------+</span><br><span class="line">|    1001 |         3 |</span><br><span class="line">|    1002 |         2 |</span><br><span class="line">|    1003 |         7 |</span><br><span class="line">|    1005 |         2 |</span><br><span class="line">+---------+-----------+</span><br><span class="line">4 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>GROUP BY 子句指示MySQL按vend_id排序并分组数据。这导致对每个 vend_id 而不是整个表计算 num_prods 一次。</p>
@@ -2045,17 +2045,17 @@
 <p><br><br><br><br><br><br></p>
 <h2 id="13-3-过滤分组"><a href="#13-3-过滤分组" class="headerlink" title="13.3 过滤分组"></a>13.3 过滤分组</h2><ul>
 <li><strong>WHERE</strong> 子句用于<strong>过滤行</strong></li>
-<li>==<strong>HAVING</strong>== 子句用与==<strong>过滤分组</strong>==</li>
+<li><strong><code>HAVING</code></strong> 子句用与<font color="ffa600">过滤分组</font></li>
 </ul>
 <blockquote>
 <p><strong>HAVING支持所有WHERE操作符</strong>    有关WHERE的所有技术和选项都适用于HAVING（如通配符条件和带多个操作符的子句），它们的语法时相同的，只是关键字有差别。</p>
 </blockquote>
 <p>例1：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT cust_id, COUNT(*) AS orders FROM orders GROUP BY cust_id HAVING COUNT(*) &gt;= 2;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> cust_id, <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> orders </span><br><span class="line"><span class="keyword">FROM</span> orders </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> cust_id </span><br><span class="line"><span class="keyword">HAVING</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="operator">&gt;=</span> <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+--------+| cust_id | orders |+---------+--------+|   10001 |      2 |+---------+--------+1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.02 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+--------+</span><br><span class="line">| cust_id | orders |</span><br><span class="line">+---------+--------+</span><br><span class="line">|   10001 |      2 |</span><br><span class="line">+---------+--------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.02 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>该语句前3行与上一个例子一致。最后一行为 HAVING 子句，过滤出两个以上订单的分组。</p>
@@ -2068,10 +2068,10 @@
 <p><br><br></p>
 <p>例2：WHERE 和 HAVING 同时使用的例子——列出具有2个及以上、价格为10及以上的产品的供应商</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT vend_id, COUNT(*) AS num_prods FROM products WHERE prod_price &gt;= 10 GROUP BY vend_id HAVING COUNT(*) &gt;= 2;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> vend_id, <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> num_prods </span><br><span class="line"><span class="keyword">FROM</span> products </span><br><span class="line"><span class="keyword">WHERE</span> prod_price <span class="operator">&gt;=</span> <span class="number">10</span> </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> vend_id </span><br><span class="line"><span class="keyword">HAVING</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="operator">&gt;=</span> <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+-----------+| vend_id | num_prods |+---------+-----------+|    1003 |         4 ||    1005 |         2 |+---------+-----------+2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+-----------+</span><br><span class="line">| vend_id | num_prods |</span><br><span class="line">+---------+-----------+</span><br><span class="line">|    1003 |         4 |</span><br><span class="line">|    1005 |         2 |</span><br><span class="line">+---------+-----------+</span><br><span class="line">2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>分组的目的往往在于对目标组的数据进行运算或整合，所以 GROUP BY 经常与聚合函数联用。WHERE 子句初步过滤一些行，HAVING 子句进一步过滤一些组。</p>
@@ -2101,7 +2101,7 @@
 <p>注意表中的第一项差别。一般在使用 <code>GROUP BY</code> 子句时，应该也给出 <code>ORDER BY</code> 子句。这是保证数据正确排序的唯一方法。不要仅依赖<code>GROUP BY</code>排序数据。</p>
 <p><strong>例</strong>：检索总计订单价格大于等于50的订单的<strong>订单号</strong>和<strong>总计订单价格</strong>，并<strong>按总计订单价格排序</strong>。</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT order_num, SUM(quantity*item_price) AS ordertotal FROM orderitems GROUP BY order_num HAVING SUM(quantity*item_price) &gt;= 50 ORDER BY ordertotal;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> order_num, <span class="built_in">SUM</span>(quantity<span class="operator">*</span>item_price) <span class="keyword">AS</span> ordertotal </span><br><span class="line"><span class="keyword">FROM</span> orderitems </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> order_num </span><br><span class="line"><span class="keyword">HAVING</span> <span class="built_in">SUM</span>(quantity<span class="operator">*</span>item_price) <span class="operator">&gt;=</span> <span class="number">50</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> ordertotal;</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>执行步骤：</p>
@@ -2114,7 +2114,7 @@
 <li>ORDER BY对分组排序</li>
 </ul>
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-----------+------------+| order_num | ordertotal |+-----------+------------+|     20006 |      55.00 ||     20008 |     125.00 ||     20005 |     149.87 ||     20007 |    1000.00 |+-----------+------------+4 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.06 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-----------+------------+</span><br><span class="line">| order_num | ordertotal |</span><br><span class="line">+-----------+------------+</span><br><span class="line">|     20006 |      55.00 |</span><br><span class="line">|     20008 |     125.00 |</span><br><span class="line">|     20005 |     149.87 |</span><br><span class="line">|     20007 |    1000.00 |</span><br><span class="line">+-----------+------------+</span><br><span class="line">4 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.06 sec)</span><br></pre></td></tr></table></figure>
 
 <p><br><br><br><br><br><br></p>
 <h2 id="13-5-SELECT子句书写顺序"><a href="#13-5-SELECT子句书写顺序" class="headerlink" title="13.5 SELECT子句书写顺序"></a>13.5 SELECT子句书写顺序</h2><p><strong>表13-2 <code>SELECT</code> 子句及其顺序</strong></p>
@@ -2197,9 +2197,9 @@
 <li><p>检索包含物品TNT2的所有订单的编号。</p>
 <ul>
 <li><p>输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT order_num FROM orderitems WHERE prod_id = &#x27;TNT2&#x27;;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> order_num </span><br><span class="line"><span class="keyword">FROM</span> orderitems </span><br><span class="line"><span class="keyword">WHERE</span> prod_id <span class="operator">=</span> <span class="string">&#x27;TNT2&#x27;</span>;</span><br></pre></td></tr></table></figure></li>
 <li><p>输出</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-----------+| order_num |+-----------+|     20005 ||     20007 |+-----------+2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-----------+</span><br><span class="line">| order_num |</span><br><span class="line">+-----------+</span><br><span class="line">|     20005 |</span><br><span class="line">|     20007 |</span><br><span class="line">+-----------+</span><br><span class="line">2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
 
 <br></li>
 </ul>
@@ -2207,9 +2207,9 @@
 <li><p>检索具有前一步骤列出的订单编号的所有客户的ID。</p>
 <ul>
 <li><p>输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT cust_id FROM orders WHERE order_num IN (20005, 20007);</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> cust_id </span><br><span class="line"><span class="keyword">FROM</span> orders </span><br><span class="line"><span class="keyword">WHERE</span> order_num <span class="keyword">IN</span> (<span class="number">20005</span>, <span class="number">20007</span>);</span><br></pre></td></tr></table></figure></li>
 <li><p>输出</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+| cust_id |+---------+|   10001 ||   10004 |+---------+2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+</span><br><span class="line">| cust_id |</span><br><span class="line">+---------+</span><br><span class="line">|   10001 |</span><br><span class="line">|   10004 |</span><br><span class="line">+---------+</span><br><span class="line">2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <br></li>
 </ul>
@@ -2217,9 +2217,9 @@
 <li><p>检索前一步骤返回的所有客户ID的客户信息。</p>
 <ul>
 <li><p>输入</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT cust_name, cust_contact FROM customers WHERE cust_id IN (10001, 10004);</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact </span><br><span class="line"><span class="keyword">FROM</span> customers </span><br><span class="line"><span class="keyword">WHERE</span> cust_id <span class="keyword">IN</span> (<span class="number">10001</span>, <span class="number">10004</span>);</span><br></pre></td></tr></table></figure></li>
 <li><p>输出</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+--------------+| cust_name      | cust_contact |+----------------+--------------+| Coyote Inc.    | Y Lee        || Yosemite Place | Y Sam        |+----------------+--------------+2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+--------------+</span><br><span class="line">| cust_name      | cust_contact |</span><br><span class="line">+----------------+--------------+</span><br><span class="line">| Coyote Inc.    | Y Lee        |</span><br><span class="line">| Yosemite Place | Y Sam        |</span><br><span class="line">+----------------+--------------+</span><br><span class="line">2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
 </ol>
@@ -2227,10 +2227,10 @@
 
 <p>现在，将三个查询合并：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT cust_name, cust_contact FROM customers WHERE cust_id IN (SELECT cust_id                   FROM orders                   WHERE order_num IN (SELECT order_num                                       FROM orderitems                                       WHERE prod_id = &#x27;TNT2&#x27;));</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact </span><br><span class="line"><span class="keyword">FROM</span> customers </span><br><span class="line"><span class="keyword">WHERE</span> cust_id <span class="keyword">IN</span> (<span class="keyword">SELECT</span> cust_id </span><br><span class="line">                  <span class="keyword">FROM</span> orders </span><br><span class="line">                  <span class="keyword">WHERE</span> order_num <span class="keyword">IN</span> (<span class="keyword">SELECT</span> order_num </span><br><span class="line">                                      <span class="keyword">FROM</span> orderitems </span><br><span class="line">                                      <span class="keyword">WHERE</span> prod_id <span class="operator">=</span> <span class="string">&#x27;TNT2&#x27;</span>));</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+--------------+| cust_name      | cust_contact |+----------------+--------------+| Coyote Inc.    | Y Lee        || Yosemite Place | Y Sam        |+----------------+--------------+2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+--------------+</span><br><span class="line">| cust_name      | cust_contact |</span><br><span class="line">+----------------+--------------+</span><br><span class="line">| Coyote Inc.    | Y Lee        |</span><br><span class="line">| Yosemite Place | Y Sam        |</span><br><span class="line">+----------------+--------------+</span><br><span class="line">2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>在SELECT语句中，子查询总是从内向外处理。最里面的子查询返回订单号列表，中间的子查询返回客户ID列表，最外层的SELECT语句根据客户ID列表查询客户信息。</p>
@@ -2248,10 +2248,10 @@
 <h2 id="14-3-作为计算字段使用子查询"><a href="#14-3-作为计算字段使用子查询" class="headerlink" title="14.3 作为计算字段使用子查询"></a>14.3 作为计算字段使用子查询</h2><p><strong>例</strong>：要显示customers表中每个客户的订单总数。订单与相应的客户ID存储在orders表中。</p>
 <p>为了对每个客户执行<code>COUNT(*)</code>计算，应该将 <code>COUNT(*)</code>作为一个子查询。</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT cust_name, 	cust_state, 	(SELECT COUNT(*)     FROM orders      WHERE orders.cust_id = customers.cust_id) AS orders FROM customers ORDER BY cust_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> cust_name, </span><br><span class="line">	cust_state, </span><br><span class="line">	(<span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(<span class="operator">*</span>)</span><br><span class="line">     <span class="keyword">FROM</span> orders </span><br><span class="line">     <span class="keyword">WHERE</span> orders.cust_id <span class="operator">=</span> customers.cust_id) <span class="keyword">AS</span> orders </span><br><span class="line"><span class="keyword">FROM</span> customers </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> cust_name;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+------------+--------+| cust_name      | cust_state | orders |+----------------+------------+--------+| Coyote Inc.    | MI         |      2 || E Fudd         | IL         |      1 || Mouse House    | OH         |      0 || Wascals        | IN         |      1 || Yosemite Place | AZ         |      1 |+----------------+------------+--------+5 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+------------+--------+</span><br><span class="line">| cust_name      | cust_state | orders |</span><br><span class="line">+----------------+------------+--------+</span><br><span class="line">| Coyote Inc.    | MI         |      2 |</span><br><span class="line">| E Fudd         | IL         |      1 |</span><br><span class="line">| Mouse House    | OH         |      0 |</span><br><span class="line">| Wascals        | IN         |      1 |</span><br><span class="line">| Yosemite Place | AZ         |      1 |</span><br><span class="line">+----------------+------------+--------+</span><br><span class="line">5 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>orders是一个计算字段，它是由圆括号中的子查询建立的。该子查询对检索出的每个客户执行一次。在此例子中，该子查询执行了5次，因为检索出了5个客户。</p>
@@ -2291,7 +2291,7 @@
 <p>数据存储在多个表中，如何用单条SELECT语句检索出数据？</p>
 <p>方法为：使用联结。简单来说，<strong>联结是一种机制，用来在一条SELECT语句中关联表</strong>，因此称之为联结。使用特殊的语法，可以联结多个表返回一组输出，联结在运行时关联表中正确的行。</p>
 <h4 id="维护引用完整性"><a href="#维护引用完整性" class="headerlink" title="维护引用完整性"></a>维护引用完整性</h4><blockquote>
-<p>==<strong>维护引用完整性</strong>==    重要的是，<strong>要理解联结不是物理实体</strong>。换句话说，它在实际的数据库表中不存在。<strong>联结由MySQL根据需要建立</strong>，它<strong>存在于查询的执行当中</strong>。</p>
+<p><font color="ffa600"><strong>维护引用完整性</strong></font>    重要的是，<strong>要理解联结不是物理实体</strong>。换句话说，它在实际的数据库表中不存在。<strong>联结由MySQL根据需要建立</strong>，它<strong>存在于查询的执行当中</strong>。</p>
 <p>在使用关系表时，仅在关系列中插入合法的数据非常重要。如果管系列数据非法，将无法访问到另一个表中的数据。</p>
 <p>为防止这种情况发生，可指示MySQL只允许在某表的外键列中出现合法值（即出现在另一张表主键中的值）。这就是<strong>维护引用完整性</strong>。它是<strong>通过在表的定义中指定主键和外键来实现的</strong>。</p>
 </blockquote>
@@ -2299,10 +2299,10 @@
 <h2 id="15-2-创建联结"><a href="#15-2-创建联结" class="headerlink" title="15.2 创建联结"></a>15.2 创建联结</h2><p>联结的创建非常简单，规定要联结的所有表以及它们如何关联即可。</p>
 <p>例：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT vend_name, prod_name, prod_price FROM vendors, products WHERE vendors.vend_id = products.vend_id ORDER BY vend_name, prod_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> vend_name, prod_name, prod_price </span><br><span class="line"><span class="keyword">FROM</span> vendors, products </span><br><span class="line"><span class="keyword">WHERE</span> vendors.vend_id <span class="operator">=</span> products.vend_id </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name, prod_name;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-------------+----------------+------------+| vend_name   | prod_name      | prod_price |+-------------+----------------+------------+| ACME        | Bird seed      |      10.00 || ACME        | Carrots        |       2.50 || ACME        | Detonator      |      13.00 || ACME        | Safe           |      50.00 || ACME        | Sling          |       4.49 || ACME        | TNT (1 stick)  |       2.50 || ACME        | TNT (5 sticks) |      10.00 || Anvils R Us | .5 ton anvil   |       5.99 || Anvils R Us | 1 ton anvil    |       9.99 || Anvils R Us | 2 ton anvil    |      14.99 || Jet Set     | JetPack 1000   |      35.00 || Jet Set     | JetPack 2000   |      55.00 || LT Supplies | Fuses          |       3.42 || LT Supplies | Oil can        |       8.99 |+-------------+----------------+------------+14 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+-------------+----------------+------------+</span><br><span class="line">| vend_name   | prod_name      | prod_price |</span><br><span class="line">+-------------+----------------+------------+</span><br><span class="line">| ACME        | Bird seed      |      10.00 |</span><br><span class="line">| ACME        | Carrots        |       2.50 |</span><br><span class="line">| ACME        | Detonator      |      13.00 |</span><br><span class="line">| ACME        | Safe           |      50.00 |</span><br><span class="line">| ACME        | Sling          |       4.49 |</span><br><span class="line">| ACME        | TNT (1 stick)  |       2.50 |</span><br><span class="line">| ACME        | TNT (5 sticks) |      10.00 |</span><br><span class="line">| Anvils R Us | .5 ton anvil   |       5.99 |</span><br><span class="line">| Anvils R Us | 1 ton anvil    |       9.99 |</span><br><span class="line">| Anvils R Us | 2 ton anvil    |      14.99 |</span><br><span class="line">| Jet Set     | JetPack 1000   |      35.00 |</span><br><span class="line">| Jet Set     | JetPack 2000   |      55.00 |</span><br><span class="line">| LT Supplies | Fuses          |       3.42 |</span><br><span class="line">| LT Supplies | Oil can        |       8.99 |</span><br><span class="line">+-------------+----------------+------------+</span><br><span class="line">14 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>SELECT语句最大的差别是所指定的两个列（prod_name和prod_price）在一个表中，而另一个列（vend_name）在另一个表中。</p>
@@ -2317,10 +2317,10 @@
 </ul>
 <p>例：笛卡尔积举例</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT vend_name, prod_name, prod_price FROM vendors, products ORDER BY vend_name, prod_name;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> vend_name, prod_name, prod_price </span><br><span class="line"><span class="keyword">FROM</span> vendors, products </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> vend_name, prod_name;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+----------------+------------+| vend_name      | prod_name      | prod_price |+----------------+----------------+------------+| ACME           | .5 ton anvil   |       5.99 || ACME           | 1 ton anvil    |       9.99 || ACME           | 2 ton anvil    |      14.99 || ACME           | Bird seed      |      10.00 || ACME           | Carrots        |       2.50 || ACME           | Detonator      |      13.00 || ACME           | Fuses          |       3.42 || ACME           | JetPack 1000   |      35.00 || ACME           | JetPack 2000   |      55.00 || ACME           | Oil can        |       8.99 || ACME           | Safe           |      50.00 || ACME           | Sling          |       4.49 || ACME           | TNT (1 stick)  |       2.50 || ACME           | TNT (5 sticks) |      10.00 || Anvils R Us    | .5 ton anvil   |       5.99 || Anvils R Us    | 1 ton anvil    |       9.99 || Anvils R Us    | 2 ton anvil    |      14.99 || Anvils R Us    | Bird seed      |      10.00 || Anvils R Us    | Carrots        |       2.50 || Anvils R Us    | Detonator      |      13.00 || Anvils R Us    | Fuses          |       3.42 || Anvils R Us    | JetPack 1000   |      35.00 || Anvils R Us    | JetPack 2000   |      55.00 || Anvils R Us    | Oil can        |       8.99 || Anvils R Us    | Safe           |      50.00 || Anvils R Us    | Sling          |       4.49 || Anvils R Us    | TNT (1 stick)  |       2.50 || Anvils R Us    | TNT (5 sticks) |      10.00 || Furball Inc.   | .5 ton anvil   |       5.99 || Furball Inc.   | 1 ton anvil    |       9.99 || Furball Inc.   | 2 ton anvil    |      14.99 || Furball Inc.   | Bird seed      |      10.00 || Furball Inc.   | Carrots        |       2.50 || Furball Inc.   | Detonator      |      13.00 || Furball Inc.   | Fuses          |       3.42 || Furball Inc.   | JetPack 1000   |      35.00 || Furball Inc.   | JetPack 2000   |      55.00 || Furball Inc.   | Oil can        |       8.99 || Furball Inc.   | Safe           |      50.00 || Furball Inc.   | Sling          |       4.49 || Furball Inc.   | TNT (1 stick)  |       2.50 || Furball Inc.   | TNT (5 sticks) |      10.00 || Jet Set        | .5 ton anvil   |       5.99 || Jet Set        | 1 ton anvil    |       9.99 || Jet Set        | 2 ton anvil    |      14.99 || Jet Set        | Bird seed      |      10.00 || Jet Set        | Carrots        |       2.50 || Jet Set        | Detonator      |      13.00 || Jet Set        | Fuses          |       3.42 || Jet Set        | JetPack 1000   |      35.00 || Jet Set        | JetPack 2000   |      55.00 || Jet Set        | Oil can        |       8.99 || Jet Set        | Safe           |      50.00 || Jet Set        | Sling          |       4.49 || Jet Set        | TNT (1 stick)  |       2.50 || Jet Set        | TNT (5 sticks) |      10.00 || Jouets Et Ours | .5 ton anvil   |       5.99 || Jouets Et Ours | 1 ton anvil    |       9.99 || Jouets Et Ours | 2 ton anvil    |      14.99 || Jouets Et Ours | Bird seed      |      10.00 || Jouets Et Ours | Carrots        |       2.50 || Jouets Et Ours | Detonator      |      13.00 || Jouets Et Ours | Fuses          |       3.42 || Jouets Et Ours | JetPack 1000   |      35.00 || Jouets Et Ours | JetPack 2000   |      55.00 || Jouets Et Ours | Oil can        |       8.99 || Jouets Et Ours | Safe           |      50.00 || Jouets Et Ours | Sling          |       4.49 || Jouets Et Ours | TNT (1 stick)  |       2.50 || Jouets Et Ours | TNT (5 sticks) |      10.00 || LT Supplies    | .5 ton anvil   |       5.99 || LT Supplies    | 1 ton anvil    |       9.99 || LT Supplies    | 2 ton anvil    |      14.99 || LT Supplies    | Bird seed      |      10.00 || LT Supplies    | Carrots        |       2.50 || LT Supplies    | Detonator      |      13.00 || LT Supplies    | Fuses          |       3.42 || LT Supplies    | JetPack 1000   |      35.00 || LT Supplies    | JetPack 2000   |      55.00 || LT Supplies    | Oil can        |       8.99 || LT Supplies    | Safe           |      50.00 || LT Supplies    | Sling          |       4.49 || LT Supplies    | TNT (1 stick)  |       2.50 || LT Supplies    | TNT (5 sticks) |      10.00 |+----------------+----------------+------------+84 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+----------------+------------+</span><br><span class="line">| vend_name      | prod_name      | prod_price |</span><br><span class="line">+----------------+----------------+------------+</span><br><span class="line">| ACME           | .5 ton anvil   |       5.99 |</span><br><span class="line">| ACME           | 1 ton anvil    |       9.99 |</span><br><span class="line">| ACME           | 2 ton anvil    |      14.99 |</span><br><span class="line">| ACME           | Bird seed      |      10.00 |</span><br><span class="line">| ACME           | Carrots        |       2.50 |</span><br><span class="line">| ACME           | Detonator      |      13.00 |</span><br><span class="line">| ACME           | Fuses          |       3.42 |</span><br><span class="line">| ACME           | JetPack 1000   |      35.00 |</span><br><span class="line">| ACME           | JetPack 2000   |      55.00 |</span><br><span class="line">| ACME           | Oil can        |       8.99 |</span><br><span class="line">| ACME           | Safe           |      50.00 |</span><br><span class="line">| ACME           | Sling          |       4.49 |</span><br><span class="line">| ACME           | TNT (1 stick)  |       2.50 |</span><br><span class="line">| ACME           | TNT (5 sticks) |      10.00 |</span><br><span class="line">| Anvils R Us    | .5 ton anvil   |       5.99 |</span><br><span class="line">| Anvils R Us    | 1 ton anvil    |       9.99 |</span><br><span class="line">| Anvils R Us    | 2 ton anvil    |      14.99 |</span><br><span class="line">| Anvils R Us    | Bird seed      |      10.00 |</span><br><span class="line">| Anvils R Us    | Carrots        |       2.50 |</span><br><span class="line">| Anvils R Us    | Detonator      |      13.00 |</span><br><span class="line">| Anvils R Us    | Fuses          |       3.42 |</span><br><span class="line">| Anvils R Us    | JetPack 1000   |      35.00 |</span><br><span class="line">| Anvils R Us    | JetPack 2000   |      55.00 |</span><br><span class="line">| Anvils R Us    | Oil can        |       8.99 |</span><br><span class="line">| Anvils R Us    | Safe           |      50.00 |</span><br><span class="line">| Anvils R Us    | Sling          |       4.49 |</span><br><span class="line">| Anvils R Us    | TNT (1 stick)  |       2.50 |</span><br><span class="line">| Anvils R Us    | TNT (5 sticks) |      10.00 |</span><br><span class="line">| Furball Inc.   | .5 ton anvil   |       5.99 |</span><br><span class="line">| Furball Inc.   | 1 ton anvil    |       9.99 |</span><br><span class="line">| Furball Inc.   | 2 ton anvil    |      14.99 |</span><br><span class="line">| Furball Inc.   | Bird seed      |      10.00 |</span><br><span class="line">| Furball Inc.   | Carrots        |       2.50 |</span><br><span class="line">| Furball Inc.   | Detonator      |      13.00 |</span><br><span class="line">| Furball Inc.   | Fuses          |       3.42 |</span><br><span class="line">| Furball Inc.   | JetPack 1000   |      35.00 |</span><br><span class="line">| Furball Inc.   | JetPack 2000   |      55.00 |</span><br><span class="line">| Furball Inc.   | Oil can        |       8.99 |</span><br><span class="line">| Furball Inc.   | Safe           |      50.00 |</span><br><span class="line">| Furball Inc.   | Sling          |       4.49 |</span><br><span class="line">| Furball Inc.   | TNT (1 stick)  |       2.50 |</span><br><span class="line">| Furball Inc.   | TNT (5 sticks) |      10.00 |</span><br><span class="line">| Jet Set        | .5 ton anvil   |       5.99 |</span><br><span class="line">| Jet Set        | 1 ton anvil    |       9.99 |</span><br><span class="line">| Jet Set        | 2 ton anvil    |      14.99 |</span><br><span class="line">| Jet Set        | Bird seed      |      10.00 |</span><br><span class="line">| Jet Set        | Carrots        |       2.50 |</span><br><span class="line">| Jet Set        | Detonator      |      13.00 |</span><br><span class="line">| Jet Set        | Fuses          |       3.42 |</span><br><span class="line">| Jet Set        | JetPack 1000   |      35.00 |</span><br><span class="line">| Jet Set        | JetPack 2000   |      55.00 |</span><br><span class="line">| Jet Set        | Oil can        |       8.99 |</span><br><span class="line">| Jet Set        | Safe           |      50.00 |</span><br><span class="line">| Jet Set        | Sling          |       4.49 |</span><br><span class="line">| Jet Set        | TNT (1 stick)  |       2.50 |</span><br><span class="line">| Jet Set        | TNT (5 sticks) |      10.00 |</span><br><span class="line">| Jouets Et Ours | .5 ton anvil   |       5.99 |</span><br><span class="line">| Jouets Et Ours | 1 ton anvil    |       9.99 |</span><br><span class="line">| Jouets Et Ours | 2 ton anvil    |      14.99 |</span><br><span class="line">| Jouets Et Ours | Bird seed      |      10.00 |</span><br><span class="line">| Jouets Et Ours | Carrots        |       2.50 |</span><br><span class="line">| Jouets Et Ours | Detonator      |      13.00 |</span><br><span class="line">| Jouets Et Ours | Fuses          |       3.42 |</span><br><span class="line">| Jouets Et Ours | JetPack 1000   |      35.00 |</span><br><span class="line">| Jouets Et Ours | JetPack 2000   |      55.00 |</span><br><span class="line">| Jouets Et Ours | Oil can        |       8.99 |</span><br><span class="line">| Jouets Et Ours | Safe           |      50.00 |</span><br><span class="line">| Jouets Et Ours | Sling          |       4.49 |</span><br><span class="line">| Jouets Et Ours | TNT (1 stick)  |       2.50 |</span><br><span class="line">| Jouets Et Ours | TNT (5 sticks) |      10.00 |</span><br><span class="line">| LT Supplies    | .5 ton anvil   |       5.99 |</span><br><span class="line">| LT Supplies    | 1 ton anvil    |       9.99 |</span><br><span class="line">| LT Supplies    | 2 ton anvil    |      14.99 |</span><br><span class="line">| LT Supplies    | Bird seed      |      10.00 |</span><br><span class="line">| LT Supplies    | Carrots        |       2.50 |</span><br><span class="line">| LT Supplies    | Detonator      |      13.00 |</span><br><span class="line">| LT Supplies    | Fuses          |       3.42 |</span><br><span class="line">| LT Supplies    | JetPack 1000   |      35.00 |</span><br><span class="line">| LT Supplies    | JetPack 2000   |      55.00 |</span><br><span class="line">| LT Supplies    | Oil can        |       8.99 |</span><br><span class="line">| LT Supplies    | Safe           |      50.00 |</span><br><span class="line">| LT Supplies    | Sling          |       4.49 |</span><br><span class="line">| LT Supplies    | TNT (1 stick)  |       2.50 |</span><br><span class="line">| LT Supplies    | TNT (5 sticks) |      10.00 |</span><br><span class="line">+----------------+----------------+------------+</span><br><span class="line">84 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.01 sec)</span><br></pre></td></tr></table></figure>
 
 <br>
 
@@ -2331,7 +2331,7 @@
 <h3 id="15-2-2-内部联结"><a href="#15-2-2-内部联结" class="headerlink" title="15.2.2 内部联结"></a>15.2.2 内部联结</h3><p>目前为止所使用的联结称为<strong>等值联结</strong>（equijoin），它基于两个表之间的相等测试。这种链接也成为<strong>内部联结</strong>。可以使用特殊的语法来明确指定联结的类型。</p>
 <p>例：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT vend_name, prod_name, prod_price FROM vendors INNER JOIN products ON vendors.vend_id = products.vend_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> vend_name, prod_name, prod_price </span><br><span class="line"><span class="keyword">FROM</span> vendors <span class="keyword">INNER</span> <span class="keyword">JOIN</span> products </span><br><span class="line"><span class="keyword">ON</span> vendors.vend_id <span class="operator">=</span> products.vend_id;</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>这里，两个表之间的关系是FROM子句的组成部分，以INNER JOIN指定。在使用这种语法时，联结条件用特定的ON子句而不是WHERE子句给出。传递给ON的实际条件与传递给WHERE的相同。</p>
@@ -2342,10 +2342,10 @@
 <h3 id="15-2-3-联结多个表"><a href="#15-2-3-联结多个表" class="headerlink" title="15.2.3 联结多个表"></a>15.2.3 联结多个表</h3><p>列出所有表，定义表之间的关系。</p>
 <p>例1：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT prod_name, vend_name, prod_price, quantityFROM orderitems, products, vendors WHERE products.vend_id = vendors.vend_id     AND orderitems.prod_id = products.prod_id     AND order_num = 20005;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name, vend_name, prod_price, quantity</span><br><span class="line"><span class="keyword">FROM</span> orderitems, products, vendors </span><br><span class="line"><span class="keyword">WHERE</span> products.vend_id <span class="operator">=</span> vendors.vend_id </span><br><span class="line">    <span class="keyword">AND</span> orderitems.prod_id <span class="operator">=</span> products.prod_id </span><br><span class="line">    <span class="keyword">AND</span> order_num <span class="operator">=</span> <span class="number">20005</span>;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+-------------+------------+----------+| prod_name      | vend_name   | prod_price | quantity |+----------------+-------------+------------+----------+| .5 ton anvil   | Anvils R Us |       5.99 |       10 || 1 ton anvil    | Anvils R Us |       9.99 |        3 || TNT (5 sticks) | ACME        |      10.00 |        5 || Bird seed      | ACME        |      10.00 |        1 |+----------------+-------------+------------+----------+4 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+-------------+------------+----------+</span><br><span class="line">| prod_name      | vend_name   | prod_price | quantity |</span><br><span class="line">+----------------+-------------+------------+----------+</span><br><span class="line">| .5 ton anvil   | Anvils R Us |       5.99 |       10 |</span><br><span class="line">| 1 ton anvil    | Anvils R Us |       9.99 |        3 |</span><br><span class="line">| TNT (5 sticks) | ACME        |      10.00 |        5 |</span><br><span class="line">| Bird seed      | ACME        |      10.00 |        1 |</span><br><span class="line">+----------------+-------------+------------+----------+</span><br><span class="line">4 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p><strong>性能考虑</strong>    联结的表越多，性能下降越厉害，所以不要联结不必要的表。</p>
@@ -2354,14 +2354,14 @@
 <p><strong>例2</strong>：14章的例子使用联结重写。</p>
 <p>使用<strong>IN关键字</strong>的<strong>原解法</strong>：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT cust_name, cust_contact FROM customers WHERE cust_id IN (SELECT cust_id                   FROM orders                   WHERE order_num IN  (SELECT order_num                                       FROM orderitems                                       WHERE prod_id = &#x27;TNT2&#x27;));</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact </span><br><span class="line"><span class="keyword">FROM</span> customers </span><br><span class="line"><span class="keyword">WHERE</span> cust_id <span class="keyword">IN</span> (<span class="keyword">SELECT</span> cust_id </span><br><span class="line">                  <span class="keyword">FROM</span> orders </span><br><span class="line">                  <span class="keyword">WHERE</span> order_num <span class="keyword">IN</span>  (<span class="keyword">SELECT</span> order_num </span><br><span class="line">                                      <span class="keyword">FROM</span> orderitems </span><br><span class="line">                                      <span class="keyword">WHERE</span> prod_id <span class="operator">=</span> <span class="string">&#x27;TNT2&#x27;</span>));</span><br></pre></td></tr></table></figure>
 
 <p>使用<strong>联结</strong>的<strong>新解法</strong></p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT cust_name, cust_contact FROM customers, orders, orderitems WHERE customers.cust_id = orders.cust_id     AND orders.order_num = orderitems.order_num    AND orderitems.prod_id = &#x27;TNT2&#x27;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact </span><br><span class="line"><span class="keyword">FROM</span> customers, orders, orderitems </span><br><span class="line"><span class="keyword">WHERE</span> customers.cust_id <span class="operator">=</span> orders.cust_id </span><br><span class="line">    <span class="keyword">AND</span> orders.order_num <span class="operator">=</span> orderitems.order_num</span><br><span class="line">    <span class="keyword">AND</span> orderitems.prod_id <span class="operator">=</span> <span class="string">&#x27;TNT2&#x27;</span>;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+--------------+| cust_name      | cust_contact |+----------------+--------------+| Coyote Inc.    | Y Lee        || Yosemite Place | Y Sam        |+----------------+--------------+2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+--------------+</span><br><span class="line">| cust_name      | cust_contact |</span><br><span class="line">+----------------+--------------+</span><br><span class="line">| Coyote Inc.    | Y Lee        |</span><br><span class="line">| Yosemite Place | Y Sam        |</span><br><span class="line">+----------------+--------------+</span><br><span class="line">2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>这里没有使用嵌套子查询，而是使用两个联结。这里有3个WHERE子句条件。前面两个关联联结中的表，后一个过滤产品TNT2的数据。</p>
@@ -2385,20 +2385,20 @@
 </ul>
 <p>例：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT cust_name, cust_contactFROM customers AS c, orders AS o, orderitems AS oi WHERE c.cust_id = o.cust_id 	AND oi.order_num = o.order_num 	AND prod_id = &#x27;TNT2&#x27;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> cust_name, cust_contact</span><br><span class="line"><span class="keyword">FROM</span> customers <span class="keyword">AS</span> c, orders <span class="keyword">AS</span> o, orderitems <span class="keyword">AS</span> oi </span><br><span class="line"><span class="keyword">WHERE</span> c.cust_id <span class="operator">=</span> o.cust_id </span><br><span class="line">	<span class="keyword">AND</span> oi.order_num <span class="operator">=</span> o.order_num </span><br><span class="line">	<span class="keyword">AND</span> prod_id <span class="operator">=</span> <span class="string">&#x27;TNT2&#x27;</span>;</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>表别名还可以用于SELECT的列表，ORDER BY子句以及语句的其他部分。</p>
-<p>==<strong>注意</strong>==：<strong>表别名只在查询执行中使用</strong>。与列别名不一样，<strong>表别名不返回到客户机</strong>。</p>
+<p><font color="ffa600"><strong>注意</strong></font>：<strong>表别名只在查询执行中使用</strong>。与列别名不一样，<strong>表别名不返回到客户机</strong>。</p>
 <p><br><br><br><br><br><br></p>
 <h2 id="16-2-使用不同类型的联结"><a href="#16-2-使用不同类型的联结" class="headerlink" title="16.2 使用不同类型的联结"></a>16.2 使用不同类型的联结</h2><p>四种联结：等值联结、自联结、自然联结、外部联结</p>
 <p><br><br><br></p>
 <h3 id="16-2-1-自联结"><a href="#16-2-1-自联结" class="headerlink" title="16.2.1 自联结"></a>16.2.1 自联结</h3><p>例：假如某物品（ID为DTNTR）存在问题，想知道生产该物品的供应商生产的其他物品是否也存在这些问题。次查询要求首先找到生产ID（prod_id）为DTNTR的物品的供应商 vend_id，然后找出这个供应商生产的其他物品 （prod_id, prod_name）。</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT p1.prod_id, p1.prod_name FROM products AS p1, products AS p2 WHERE p1.vend_id = p2.vend_id;	AND p2.prod_id = &#x27;DTNTR&#x27;;	-- 正确输入	SELECT p1.prod_id, p1.prod_name FROM products AS p1WHERE p1.vend_id = p1.vend_id	AND p1.prod_id = &#x27;DTNTR&#x27;;	-- 错误输入</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> p1.prod_id, p1.prod_name </span><br><span class="line"><span class="keyword">FROM</span> products <span class="keyword">AS</span> p1, products <span class="keyword">AS</span> p2 </span><br><span class="line"><span class="keyword">WHERE</span> p1.vend_id <span class="operator">=</span> p2.vend_id;</span><br><span class="line">	<span class="keyword">AND</span> p2.prod_id <span class="operator">=</span> <span class="string">&#x27;DTNTR&#x27;</span>;	<span class="comment">-- 正确输入</span></span><br><span class="line">	</span><br><span class="line"><span class="keyword">SELECT</span> p1.prod_id, p1.prod_name </span><br><span class="line"><span class="keyword">FROM</span> products <span class="keyword">AS</span> p1</span><br><span class="line"><span class="keyword">WHERE</span> p1.vend_id <span class="operator">=</span> p1.vend_id</span><br><span class="line">	<span class="keyword">AND</span> p1.prod_id <span class="operator">=</span> <span class="string">&#x27;DTNTR&#x27;</span>;	<span class="comment">-- 错误输入</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+----------------+| prod_id | prod_name      |+---------+----------------+| DTNTR   | Detonator      || FB      | Bird seed      || FC      | Carrots        || SAFE    | Safe           || SLING   | Sling          || TNT1    | TNT (1 stick)  || TNT2    | TNT (5 sticks) |+---------+----------------+7 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)	-- 正确输出+---------+-----------+| prod_id | prod_name |+---------+-----------+| DTNTR   | Detonator |+---------+-----------+1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)		-- 错误输出（只查询到了自己）</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+----------------+</span><br><span class="line">| prod_id | prod_name      |</span><br><span class="line">+---------+----------------+</span><br><span class="line">| DTNTR   | Detonator      |</span><br><span class="line">| FB      | Bird seed      |</span><br><span class="line">| FC      | Carrots        |</span><br><span class="line">| SAFE    | Safe           |</span><br><span class="line">| SLING   | Sling          |</span><br><span class="line">| TNT1    | TNT (1 stick)  |</span><br><span class="line">| TNT2    | TNT (5 sticks) |</span><br><span class="line">+---------+----------------+</span><br><span class="line">7 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)	-- 正确输出</span><br><span class="line"></span><br><span class="line">+---------+-----------+</span><br><span class="line">| prod_id | prod_name |</span><br><span class="line">+---------+-----------+</span><br><span class="line">| DTNTR   | Detonator |</span><br><span class="line">+---------+-----------+</span><br><span class="line">1 row <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)		-- 错误输出（只查询到了自己）</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>此查询中需要的两个表实际上是相同的表，因此products表在FROM子句中出现两次。虽然是合法的，但对products的引用具有二义性。</p>
@@ -2415,20 +2415,20 @@
 <li>列出所有产品以及订购数量，<strong>包括没有人订购的产品</strong>。</li>
 <li>计算平均销售规模，<strong>包括</strong>那些至今<strong>尚未下单的客户</strong>。</li>
 </ul>
-<p>在上述例子中，联结<strong>包含了</strong>那些==<strong>在相关表中没有关联的行</strong>==。这种类型的联结称为==<strong>外部联结</strong>==。</p>
+<p>在上述例子中，联结<strong>包含了</strong>那些<font color="ffa600"><strong>在相关表中没有关联的行</strong></font>。这种类型的联结称为<font color="ffa600"><strong>外部联结</strong></font>。</p>
 <p>下面的SELECT语句给出一个简单的内部联结，检索所有客户及其订单：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT customers.cust_id, orders.order_num FROM customers INNER JOIN orders ON customers.cust_id = orders.cust_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> customers.cust_id, orders.order_num </span><br><span class="line"><span class="keyword">FROM</span> customers <span class="keyword">INNER</span> <span class="keyword">JOIN</span> orders </span><br><span class="line"><span class="keyword">ON</span> customers.cust_id <span class="operator">=</span> orders.cust_id;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+-----------+| cust_id | order_num |+---------+-----------+|   10001 |     20005 ||   10001 |     20009 ||   10003 |     20006 ||   10004 |     20007 ||   10005 |     20008 |+---------+-----------+5 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+-----------+</span><br><span class="line">| cust_id | order_num |</span><br><span class="line">+---------+-----------+</span><br><span class="line">|   10001 |     20005 |</span><br><span class="line">|   10001 |     20009 |</span><br><span class="line">|   10003 |     20006 |</span><br><span class="line">|   10004 |     20007 |</span><br><span class="line">|   10005 |     20008 |</span><br><span class="line">+---------+-----------+</span><br><span class="line">5 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
 
 <p>外部联结语法类似，但可以检索所有客户，<strong>包括那些没有订单的客户</strong>【此处customers表的表列要求出给出“<strong>全集</strong>”】，语句如下：</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT customers.cust_id, orders.order_num FROM customers LEFT OUTER JOIN orders ON customers.cust_id = orders.cust_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> customers.cust_id, orders.order_num </span><br><span class="line"><span class="keyword">FROM</span> customers <span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> orders </span><br><span class="line"><span class="keyword">ON</span> customers.cust_id <span class="operator">=</span> orders.cust_id;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+-----------+| cust_id | order_num |+---------+-----------+|   10001 |     20005 ||   10001 |     20009 ||   10002 |      NULL ||   10003 |     20006 ||   10004 |     20007 ||   10005 |     20008 |+---------+-----------+</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+-----------+</span><br><span class="line">| cust_id | order_num |</span><br><span class="line">+---------+-----------+</span><br><span class="line">|   10001 |     20005 |</span><br><span class="line">|   10001 |     20009 |</span><br><span class="line">|   10002 |      NULL |</span><br><span class="line">|   10003 |     20006 |</span><br><span class="line">|   10004 |     20007 |</span><br><span class="line">|   10005 |     20008 |</span><br><span class="line">+---------+-----------+</span><br></pre></td></tr></table></figure>
 
 <br>
 
@@ -2439,10 +2439,10 @@
 <p><br><br><br><br><br><br></p>
 <h2 id="16-3-使用带聚集函数的联结"><a href="#16-3-使用带聚集函数的联结" class="headerlink" title="16.3 使用带聚集函数的联结"></a>16.3 使用带聚集函数的联结</h2><p>聚集函数可以与联结共同使用。</p>
 <p><strong>例1</strong>：检索所有客户【给出cust_name, cust_id】即每个客户所下的订单数【此处使用 GROUP BY 按 cust_id 分组，聚集函数COUNT()求订单数量 + 别名】。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT customers.cust_name, 	customers.cust_id, 	COUNT(orders.order_num) AS num_ord FROM customers INNER JOIN orders ON customers.cust_id = orders.cust_id GROUP BY customers.cust_id;-- 聚合函数的另一种调用SELECT customers.cust_name, 	customers.cust_id, 	COUNT(orders.cust_id) AS num_ord FROM customers INNER JOIN orders ON customers.cust_id = orders.cust_id GROUP BY customers.cust_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> customers.cust_name, </span><br><span class="line">	customers.cust_id, </span><br><span class="line">	<span class="built_in">COUNT</span>(orders.order_num) <span class="keyword">AS</span> num_ord </span><br><span class="line"><span class="keyword">FROM</span> customers <span class="keyword">INNER</span> <span class="keyword">JOIN</span> orders </span><br><span class="line"><span class="keyword">ON</span> customers.cust_id <span class="operator">=</span> orders.cust_id </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> customers.cust_id;</span><br><span class="line"><span class="comment">-- 聚合函数的另一种调用</span></span><br><span class="line"><span class="keyword">SELECT</span> customers.cust_name, </span><br><span class="line">	customers.cust_id, </span><br><span class="line">	<span class="built_in">COUNT</span>(orders.cust_id) <span class="keyword">AS</span> num_ord </span><br><span class="line"><span class="keyword">FROM</span> customers <span class="keyword">INNER</span> <span class="keyword">JOIN</span> orders </span><br><span class="line"><span class="keyword">ON</span> customers.cust_id <span class="operator">=</span> orders.cust_id </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> customers.cust_id;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+---------+---------+| cust_name      | cust_id | num_ord |+----------------+---------+---------+| Coyote Inc.    |   10001 |       2 || Wascals        |   10003 |       1 || Yosemite Place |   10004 |       1 || E Fudd         |   10005 |       1 |+----------------+---------+---------+</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+---------+---------+</span><br><span class="line">| cust_name      | cust_id | num_ord |</span><br><span class="line">+----------------+---------+---------+</span><br><span class="line">| Coyote Inc.    |   10001 |       2 |</span><br><span class="line">| Wascals        |   10003 |       1 |</span><br><span class="line">| Yosemite Place |   10004 |       1 |</span><br><span class="line">| E Fudd         |   10005 |       1 |</span><br><span class="line">+----------------+---------+---------+</span><br></pre></td></tr></table></figure>
 
 <p><strong>分析</strong></p>
 <p>INNER JOIN将customers和orders表互相关联。GROUP BY 按客户分组数据；COUNT()对每个客户的订单计数，将它作为num_ord返回。</p>
@@ -2450,22 +2450,22 @@
 
 <p>聚集函数也可以和其他联结一起使用。</p>
 <p><strong>输入</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT customers.cust_name, 	customers.cust_id, 	COUNT(orders.order_num) AS num_ord FROM customers LEFT OUTER JOIN orders ON customers.cust_id = orders.cust_id GROUP BY customers.cust_id;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> customers.cust_name, </span><br><span class="line">	customers.cust_id, </span><br><span class="line">	<span class="built_in">COUNT</span>(orders.order_num) <span class="keyword">AS</span> num_ord </span><br><span class="line"><span class="keyword">FROM</span> customers <span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> orders </span><br><span class="line"><span class="keyword">ON</span> customers.cust_id <span class="operator">=</span> orders.cust_id </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> customers.cust_id;</span><br></pre></td></tr></table></figure>
 
 <p><strong>输出</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+---------+---------+| cust_name      | cust_id | num_ord |+----------------+---------+---------+| Coyote Inc.    |   10001 |       2 || Mouse House    |   10002 |       0 || Wascals        |   10003 |       1 || Yosemite Place |   10004 |       1 || E Fudd         |   10005 |       1 |+----------------+---------+---------+</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+----------------+---------+---------+</span><br><span class="line">| cust_name      | cust_id | num_ord |</span><br><span class="line">+----------------+---------+---------+</span><br><span class="line">| Coyote Inc.    |   10001 |       2 |</span><br><span class="line">| Mouse House    |   10002 |       0 |</span><br><span class="line">| Wascals        |   10003 |       1 |</span><br><span class="line">| Yosemite Place |   10004 |       1 |</span><br><span class="line">| E Fudd         |   10005 |       1 |</span><br><span class="line">+----------------+---------+---------+</span><br></pre></td></tr></table></figure>
 
 <p><br><br><br><br><br><br></p>
 <h2 id="16-4-使用联结和联结条件"><a href="#16-4-使用联结和联结条件" class="headerlink" title="16.4 使用联结和联结条件"></a>16.4 使用联结和联结条件</h2><p>以下为关于联结及其使用的某些要点：</p>
 <ul>
-<li>==<strong>注意所使用的联结类型</strong>==。<strong>一般</strong>我们<strong>使用内部联结</strong>，但使用外部连接也是有效的。</li>
-<li>保证==<strong>使用正确的联结条件</strong>==，否则将返回不正确的数据。</li>
-<li>应该总是==<strong>提供连接条件</strong>==，否则会得出笛卡尔积。</li>
+<li><font color="ffa600"><strong>注意所使用的联结类型</strong></font>。<strong>一般</strong>我们<strong>使用内部联结</strong>，但使用外部连接也是有效的。</li>
+<li>保证<font color="ffa600"><strong>使用正确的联结条件</strong></font>，否则将返回不正确的数据。</li>
+<li>应该总是<font color="ffa600"><strong>提供连接条件</strong></font>，否则会得出笛卡尔积。</li>
 <li>在一个联结中可以包含多个表，甚至对于每个联结可以采用不同的联结类型。注意分别测试每个联结，简化故障排除过程。</li>
 </ul>
 <p><br><br><br><br><br><br></p>
 <h2 id="16-5-小结"><a href="#16-5-小结" class="headerlink" title="16.5 小结"></a>16.5 小结</h2><p>假设查询语句是：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT ... FROM tableA ??? JOIN tableB ON tableA.column1 = tableB.column2;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ... </span><br><span class="line"><span class="keyword">FROM</span> tableA ??? <span class="keyword">JOIN</span> tableB </span><br><span class="line"><span class="keyword">ON</span> tableA.column1 <span class="operator">=</span> tableB.column2;</span><br></pre></td></tr></table></figure>
 
 <p>我们把tableA看作左表，把tableB看成右表，那么 <strong>INNER JOIN</strong> 是选出两张表都存在的记录：</p>
 <img src="/.io//image-20210923082407583.png" style="zoom:67%;">
