@@ -28,11 +28,6 @@
     <content><![CDATA[<p>此处为摘要内容。</p>
 <span id="more"></span>
 
-<div><div class="fold_hider"><div class="close hider_title">折叠内容</div></div><div class="fold">
-<p>something you want to fold, include code block.<br>&#39;&#39;&#39;<br>System.out.println(“QAQ！”);<br>console.log(“QAQ！”);<br>print(“QAQ！”);<br>printf(“QAQ！\n”);<br>cout &lt;&lt; “QAQ！” &lt;&lt; endl;<br>Console.WriteLine(“QAQ！”);<br>Response.Write(“QAQ！”);<br>alert(“QAQ！”)<br>echo “QAQ！”<br>&#39;&#39;&#39;</p>
-
-</div></div>
-
 
 
 
@@ -43,9 +38,9 @@
 
 <ul>
 <li><p>语句测试</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM customers;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> customers;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM customers;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> customers;</span><br></pre></td></tr></table></figure></li>
 </ul>
 <ul>
 <li><p><strong>事务处理（transactionprocessing）</strong>：可以用来维护数据库的完整性，它保证成批的MySQL操作要么完全执行，要么完全不执行。</p>
@@ -53,15 +48,16 @@
 <li><p>控制事务处理：</p>
 <ul>
 <li><p>事务启动</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">START TRANSACTION;	-- 开启事务</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">START</span> TRANSACTION;	<span class="comment">-- 开启事务</span></span><br></pre></td></tr></table></figure></li>
 <li><p>回退（撤销）到事务启动前的状态</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">START TRANSACTION;	-- 开启事务</span><br><span class="line">DELETE FROM ordertotals;	-- 删除表所有行</span><br><span class="line">ROLLBACK;		-- 回退</span><br></pre></td></tr></table></figure></li>
 <li><p>部分提交（部分回退）：使用保留点</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SAVEPOINT</span> delete1;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">ROLLBACK</span> <span class="keyword">TO</span> delete1;</span><br></pre></td></tr></table></figure></li>
+<li><p>更改默认的提交行为</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SET</span> autocommit<span class="operator">=</span><span class="number">0</span>;	<span class="comment">-- 设置为默认不提交</span></span><br><span class="line"><span class="keyword">SET</span> autocommit<span class="operator">=</span><span class="number">1</span>;	<span class="comment">-- 设置为默认提交</span></span><br></pre></td></tr></table></figure>
+
 <ul>
-<li><p>~~~mysql<br>SAVEPOINT delete1;<br>…<br>ROLLBACK TO delete1;</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">* 更改默认的提交行为</span><br><span class="line"></span><br><span class="line">  * ~~~mysql</span><br><span class="line">    SET autocommit=0;	-- 设置为默认不提交</span><br><span class="line">    SET autocommit=1;	-- 设置为默认提交</span><br></pre></td></tr></table></figure></li>
-<li><p>注意：<code>autocommit</code> 标志是针对每个==连接==而不是服务器的。</p>
-</li>
+<li>注意：<code>autocommit</code> 标志是针对每个==连接==而不是服务器的。</li>
 </ul>
 </li>
 </ul>
