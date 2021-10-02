@@ -2454,14 +2454,14 @@
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ... </span><br><span class="line"><span class="keyword">FROM</span> tableA ??? <span class="keyword">JOIN</span> tableB </span><br><span class="line"><span class="keyword">ON</span> tableA.column1 <span class="operator">=</span> tableB.column2;</span><br></pre></td></tr></table></figure>
 
 <p>我们把tableA看作左表，把tableB看成右表，那么 <strong>INNER JOIN</strong> 是选出两张表都存在的记录：</p>
-<img src="/.io//MySQL基础_INNERJOIN.png" alt="MySQL基础_INNERJOIN" style="zoom:67%;">
+<img src="/2021/09/30/MySQL%E5%9F%BA%E7%A1%80/1.png" alt="MySQL基础_INNERJOIN" style="zoom:67%;">
 
 <p><strong>LEFT OUTER JOIN</strong> 是选出左表存在的记录：</p>
-<p><img src="/.io//MySQL%E5%9F%BA%E7%A1%80_LEFTOUTERJOIN.png"></p>
+<p><img src="/2021/09/30/MySQL%E5%9F%BA%E7%A1%80/2.png"></p>
 <p><strong>RIGHT OUTER JOIN</strong> 是选出右表存在的记录：</p>
-<p><img src="/.io//MySQL%E5%9F%BA%E7%A1%80_RIGHTOUTERJOIN.png"></p>
+<p><img src="/2021/09/30/MySQL%E5%9F%BA%E7%A1%80/3.png"></p>
 <p><strong>FULL OUTER JOIN</strong> 则是选出左右表都存在的记录：</p>
-<img src="/.io//MySQL基础_FULLOUTERJOIN.png" alt="MySQL基础_FULLOUTERJOIN" style="zoom:67%;">
+<img src="/2021/09/30/MySQL%E5%9F%BA%E7%A1%80/4.png" alt="MySQL基础_FULLOUTERJOIN" style="zoom:67%;">
 
 <h4 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h4><p>JOIN查询需要<strong>先确定主表</strong>，然后把<strong>另一个表的数据</strong>“<strong>附加</strong>”到结果集上；</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ...<span class="keyword">FROM</span> 附表 <span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> 主表<span class="keyword">ON</span> ...</span><br></pre></td></tr></table></figure>
