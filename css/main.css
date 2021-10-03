@@ -1343,7 +1343,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ffffd2;
+  background: #78ffdf;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2916,11 +2916,77 @@ body footer > div > div {
 }
 /* inline codeblock */
 code {
-  color: #ee7b7b;
+  color: #e03030;
   font-size: 0.9em;
-  background-color: #202020;
+  background-color: #e7cbcb;
   border-radius: 6px;
   padding: 4px 4px 4px 4px;
   margin: 0px 0px 0px 0px;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
 }
+/* codeblock */
+.md-fences,
+.md-fences:active {
+  border-radius: 6px;
+}
+/* blockquote */
+blockquote {
+  color: #b1b4b9;
+  background-color: #525252;
+}
+h1 {
+  font-size: 3em;
+  padding-bottom: 0.5em;
+  border-bottom: 3px;
+}
+/* #write h1:before {
+  font-size: 2.5em;
+  padding-bottom: 0.5em;
+  border-bottom: 3px double var(--text-color5);
+}
+ */
+h2 {
+  font-size: 2em;
+  padding-bottom: 0.5em;
+  border-bottom: 3px;
+}
+/* #write h2:before {
+  font-size: 1.63em;
+  padding-bottom: 0.5em;
+  border-bottom: 3px double var(--text-color5);
+}
+ */
+h3 {
+  font-size: 1.5em;
+  padding-bottom: 0.5em;
+  border-bottom: 2px;
+}
+/* #write h3:before {
+  font-size: 1.17em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid var(--text-color5);
+}
+ */
+h4 {
+  font-size: 1.2em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px;
+}
+/* #write h4:before {
+  font-size: 1.12em;
+}
+ */
+h5 {
+  font-size: 1.1em;
+}
+/* #write h5:before {
+  font-size: 0.97em;
+}
+ */
+h6 {
+  font-size: 1.05em;
+}
+/* #write h6:before {
+  font-size: 0.93em;
+}
+ */
