@@ -1343,7 +1343,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #78ffdf;
+  background: #d99a65;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2932,7 +2932,7 @@ code {
 /* blockquote */
 blockquote {
   color: #b1b4b9;
-  background-color: #525252;
+  background-color: #444;
 }
 h1 {
   font-size: 3em;
