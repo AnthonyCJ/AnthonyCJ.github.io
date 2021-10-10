@@ -204,7 +204,10 @@
 </blockquote>
 <p><br><br></p>
 <h4 id="1-1-6-外键"><a href="#1-1-6-外键" class="headerlink" title="1.1.6 外键"></a>1.1.6 外键</h4><ul>
-<li>参考连接：<a href="https://www.liaoxuefeng.com/wiki/1177760294764384/1218728424164736">外键 - 廖雪峰</a></li>
+<li><p><strong>外键（foreign key）</strong>：是在表中由单列或多列复合而成，并在<font color="ff9f44">其它某表</font>中以<font color="ff9f44">主键形式</font>对应再次出现的键。即<font color="ff9f44"><strong>某张表</strong>中出现的<strong>外键</strong>是<strong>另外某张表</strong>中的<strong>主键</strong>。</font></p>
+</li>
+<li><p>参考连接：<a href="https://www.liaoxuefeng.com/wiki/1177760294764384/1218728424164736">外键 - 廖雪峰</a></p>
+</li>
 </ul>
 <p>当我们用主键唯一标识记录时，我们就可以在<code>students</code>表中确定任意一个学生的记录：</p>
 <table>
