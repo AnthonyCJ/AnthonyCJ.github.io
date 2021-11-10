@@ -4625,17 +4625,17 @@
 <br>
 
 <h3 id="常用执行顺序"><a href="#常用执行顺序" class="headerlink" title="常用执行顺序"></a>常用执行顺序</h3><ol>
-<li><strong><code>FROM</code></strong> ： 对FROM左边的表和右边的表计算<strong>笛卡尔积</strong>，产生虚表VT1；</li>
-<li><strong><code>ON</code></strong> ： 对虚拟表VT1进行ON筛选，只有那些符合条件的行才会被记录在虚拟表VT2中；</li>
-<li><strong><code>JOIN</code></strong> ：如果是OUT JOIN，那么将保留表中（如左表或者右表）未匹配的行作为外部行添加到虚拟表VT2中，从而产生虚拟表VT3；</li>
-<li><strong><code>WHERE</code></strong> ：对虚拟表VT3进行 <strong>WHERE 条件过滤</strong>，只有符合的记录才会被放入到虚拟表VT4；</li>
-<li><strong><code>GROUP BY</code><strong>：根据GROUP BY子句中的列，对虚拟表VT4进行</strong>分组</strong>操作，产生虚拟表VT5；</li>
-<li>**<code>CUBE|ROLLUP</code>**：对虚拟表VT5进行CUBE或者ROLLUP操作，产生虚拟表VT6；</li>
-<li><strong><code>HAVING</code></strong> ：对虚拟表VT6进行 <strong>HAVING 条件过滤</strong>，只有符合的记录才会被插入到虚拟表VT7中；</li>
-<li><strong><code>SELECT</code></strong> ：执行SELECT操作，<strong>选择指定的列</strong>，插入到虚拟表VT8中；</li>
-<li><strong><code>DISTINCT</code></strong> ：对虚拟表VT8中的记录进行<strong>去重</strong>，产生虚拟表VT9；</li>
-<li><strong><code>ORDER BY</code></strong> ：将虚拟表VT9中的记录按照进行<strong>排序</strong>操作，产生虚拟表VT10；</li>
-<li><strong><code>LIMIT</code></strong> ：取出指定行的记录，<strong>限定行数</strong>，产生虚拟表VT11，并将结果返回。</li>
+<li><code>FROM</code> ： 对FROM左边的表和右边的表计算<strong>笛卡尔积</strong>，产生虚表VT1；</li>
+<li><code>ON</code> ： 对虚拟表VT1进行ON筛选，只有那些符合条件的行才会被记录在虚拟表VT2中；</li>
+<li><code>JOIN</code> ：如果是OUT JOIN，那么将保留表中（如左表或者右表）未匹配的行作为外部行添加到虚拟表VT2中，从而产生虚拟表VT3；</li>
+<li><code>WHERE</code> ：对虚拟表VT3进行 <strong>WHERE 条件过滤</strong>，只有符合的记录才会被放入到虚拟表VT4；</li>
+<li><code>GROUP BY</code>：根据GROUP BY子句中的列，对虚拟表VT4进行<strong>分组</strong>操作，产生虚拟表VT5；</li>
+<li><code>CUBE|ROLLUP</code>：对虚拟表VT5进行CUBE或者ROLLUP操作，产生虚拟表VT6；</li>
+<li><code>HAVING</code> ：对虚拟表VT6进行 <strong>HAVING 条件过滤</strong>，只有符合的记录才会被插入到虚拟表VT7中；</li>
+<li><code>SELECT</code> ：执行SELECT操作，<strong>选择指定的列</strong>，插入到虚拟表VT8中；</li>
+<li><code>DISTINCT</code> ：对虚拟表VT8中的记录进行<strong>去重</strong>，产生虚拟表VT9；</li>
+<li><code>ORDER BY</code> ：将虚拟表VT9中的记录按照进行<strong>排序</strong>操作，产生虚拟表VT10；</li>
+<li><code>LIMIT</code> ：取出指定行的记录，<strong>限定行数</strong>，产生虚拟表VT11，并将结果返回。</li>
 </ol>
 <p><br><br><br><br><br><br><br><br><br><br><br><br></p>
 <hr>
