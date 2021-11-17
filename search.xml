@@ -2824,8 +2824,16 @@
 <h3 id="20-2-删除数据"><a href="#20-2-删除数据" class="headerlink" title="20.2 删除数据"></a>20.2 删除数据</h3><p>使用DELETE语句，有两种方式：</p>
 <ul>
 <li>从表中删除特定的行；</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> 表名</span><br><span class="line"><span class="keyword">WHERE</span> 条件;</span><br></pre></td></tr></table></figure>
+
+<ul>
 <li>从表中删除所有行。</li>
 </ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> 表名;</span><br></pre></td></tr></table></figure>
+
+
+
 <blockquote>
 <p><strong>不要省略WHERE子句</strong>    使用DELETE语句时，如果省略WHERE子句，将会删除所有行。</p>
 </blockquote>
@@ -5213,6 +5221,45 @@
 <td><code>ZEROFILL</code></td>
 </tr>
 </tbody></table>
+<p><br><br><br><br><br><br><br><br><br><br><br><br></p>
+<hr>
+<p><br><br><br><br><br><br><br><br><br><br><br><br></p>
+<h2 id="附录5：从本地文件导入数据、数据导出至本地文件的方法"><a href="#附录5：从本地文件导入数据、数据导出至本地文件的方法" class="headerlink" title="附录5：从本地文件导入数据、数据导出至本地文件的方法"></a>附录5：从本地文件导入数据、数据导出至本地文件的方法</h2><h3 id="从本地文件（-csv）导入数据"><a href="#从本地文件（-csv）导入数据" class="headerlink" title="从本地文件（.csv）导入数据"></a>从本地文件（.csv）导入数据</h3><p><strong>步骤一、设置参数<code>secure_file_priv</code>为<code>‘’</code></strong></p>
+<p>该参数默认为OFF，应设为ON</p>
+<ul>
+<li><code>secure_file_priv</code> 为 <code>NULL</code> 时，表示限制 <code>mysqld</code> 不允许导入或导出，此时执行导出命令将提示如下错误</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>secure_file_priv</code> 为 <code>/tmp</code> 时，表示限制 <code>mysqld</code> 只能在 <code>/tmp</code> 目录中执行导入导出，其他目录不能执行。</li>
+<li><code>secure_file_priv</code> 没有值时，表示不限制 <code>mysqld</code> 在任意目录的导入导出。</li>
+</ul>
+<p>查看变量状态命令：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> VARIABLES <span class="keyword">LIKE</span> <span class="string">&#x27;%secure_file_priv%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>查询结果</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 默认值为NULL</span></span><br><span class="line">+------------------+-------+</span><br><span class="line">| Variable_name    | Value |</span><br><span class="line">+------------------+-------+</span><br><span class="line">| secure_file_priv | NULL  |</span><br><span class="line">+------------------+-------+</span><br></pre></td></tr></table></figure>
+
+<p>设置变量状态：</p>
+<p>由于 <code>secure_file_priv</code> 参数是只读参数，不能使用 <code>set global </code>命令修改，所以在 <code>my.ini</code> 文件中手动设置该参数的值。</p>
+<p>打开mysql安装根目录下的 <code>my.ini</code>，在 <code>[mysqld]</code> 下添加 <code>secure_file_priv=&#39;&#39;</code></p>
+<blockquote>
+<p>注意，my.ini配置文件中是在 <code>[mysqld]</code> 下添加 <code>secure_file_priv=&#39;&#39;</code>，而不是直接添加至文件末尾。</p>
+</blockquote>
+<p>保存后需要重启mysql服务。（右键此电脑 -&gt; 管理 -&gt; 服务和应用程序 -&gt; 服务 -&gt; 找到mysql，先停止再启动）</p>
+<br>
+
+<p>步骤二、在mysql界面使用命令导入数据</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">LOAD DATA INFILE “E:<span class="operator">/</span>tempdb<span class="operator">/</span>filename.csv” <span class="keyword">INTO</span> <span class="keyword">TABLE</span> tablename <span class="type">CHARACTER</span> <span class="keyword">SET</span> gbk FIELDS TERMINATED <span class="keyword">BY</span> “,” LINES TERMINATED <span class="keyword">BY</span> “\r\n”;</span><br><span class="line"><span class="comment">-- 样例如下</span></span><br><span class="line">LOAD DATA INFILE “E:<span class="operator">/</span>tempdb<span class="operator">/</span>employee.csv” <span class="keyword">INTO</span> <span class="keyword">TABLE</span> employee <span class="type">CHARACTER</span> <span class="keyword">SET</span> gbk FIELDS TERMINATED <span class="keyword">BY</span> “,” LINES TERMINATED <span class="keyword">BY</span> “\r\n”;</span><br></pre></td></tr></table></figure>
+
+<p><br><br></p>
+<h3 id="导出表数据至本地文件"><a href="#导出表数据至本地文件" class="headerlink" title="导出表数据至本地文件"></a>导出表数据至本地文件</h3><p>命令如下：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> tablename <span class="keyword">INTO</span> OUTFILE “E:<span class="operator">/</span>tempdb<span class="operator">/</span>filename.csv” FIELDS TERMINATED <span class="keyword">BY</span> “,” OPTIONALLY ENCLOSED <span class="keyword">BY</span> <span class="string">&#x27;&quot;&#x27;</span> LINES TERMINATED <span class="keyword">BY</span> “\r\n”;</span><br><span class="line"><span class="comment">-- 样例</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> salary <span class="keyword">INTO</span> OUTFILE “E:<span class="operator">/</span>tempdb<span class="operator">/</span>outputsalary.txt” FIELDS TERMINATED <span class="keyword">BY</span> “,” OPTIONALLY ENCLOSED <span class="keyword">BY</span> <span class="string">&#x27;&quot;&#x27;</span> LINES TERMINATED <span class="keyword">BY</span> “\r\n”;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> salary <span class="keyword">INTO</span> OUTFILE “E:<span class="operator">/</span>tempdb<span class="operator">/</span>outputsalary.csv” FIELDS TERMINATED <span class="keyword">BY</span> “,” LINES TERMINATED <span class="keyword">BY</span> “\r\n”;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：<code>.csv</code>后缀表示以逗号分隔，可使用excel打开。也可以保存为其它类型的文件。</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>CS-Notes</category>
