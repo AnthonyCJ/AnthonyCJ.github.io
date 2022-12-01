@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-flash.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"anthonycj.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="JavaSE-学习笔记，主要内容为Java方法（函数）相关概念、面向对象三大特性（封装、继承、多态）-封装相关知识。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaSE-3-面向对象-1">
+<meta property="og:url" content="https://anthonycj.github.io/2022/12/01/JavaSE-3-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-1/index.html">
+<meta property="og:site_name" content="AnthonyCJ&#39;s Blogs">
+<meta property="og:description" content="JavaSE-学习笔记，主要内容为Java方法（函数）相关概念、面向对象三大特性（封装、继承、多态）-封装相关知识。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-12-01T14:24:48.000Z">
+<meta property="article:modified_time" content="2022-12-01T14:31:34.956Z">
+<meta property="article:author" content="AnthonyCJ">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="JavaSE">
+<meta property="article:tag" content="面向对象">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://anthonycj.github.io/2022/12/01/JavaSE-3-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>JavaSE-3-面向对象-1 | AnthonyCJ's Blogs</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+      <!-- 爆炸效果 -->
+  <!-- <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+  <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+  <script type="text/javascript" src="/js/firework.js"></script> -->
+
+<link rel="alternate" href="/atom.xml" title="AnthonyCJ's Blogs" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">AnthonyCJ's Blogs</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Find your passion, and you'll feel the light.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/AnthonyCJ" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://anthonycj.github.io/2022/12/01/JavaSE-3-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="AnthonyCJ">
+      <meta itemprop="description" content="我要起飞啦~">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="AnthonyCJ's Blogs">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaSE-3-面向对象-1
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-01 22:24:48 / 修改时间：22:31:34" itemprop="dateCreated datePublished" datetime="2022-12-01T22:24:48+08:00">2022-12-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS-Notes/" itemprop="url" rel="index"><span itemprop="name">CS-Notes</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS-Notes/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS-Notes/Java/JavaSE/" itemprop="url" rel="index"><span itemprop="name">JavaSE</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>JavaSE-学习笔记，主要内容为Java方法（函数）相关概念、面向对象三大特性（封装、继承、多态）-封装相关知识。</p>
+<span id="more"></span>
+
+<h2 id="1-Java方法（函数）"><a href="#1-Java方法（函数）" class="headerlink" title="1. Java方法（函数）"></a>1. Java方法（函数）</h2><h3 id="1-1-概念"><a href="#1-1-概念" class="headerlink" title="1.1 概念"></a>1.1 概念</h3><p>概念：也叫函数，其实就是具有一定特殊功能的一段代码，将需要在多个位置重复使用的一组代码，<br>定义在方法内部。<br>意义：1.避免了重复的代码。2.增强了程序的扩展性。</p>
+<br>
+
+<h3 id="1-2-定义方法"><a href="#1-2-定义方法" class="headerlink" title="1.2 定义方法"></a>1.2 定义方法</h3><p>语法格式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[修饰符<span class="number">1</span>,修饰符<span class="number">2.</span>..] 返回值/<span class="keyword">void</span> 方法名(参数列表) &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>示例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>修饰符：public，static<br>返回值：一个方法执行之后，返回给调用处的结果。可能有，也可能没有。<br>有：在方法定义的时候，写清楚方法要返回的数据的类型。<br>没有：void，表示这个方法执行结束之后，没有返回值给调用处。<br>方法名：也是一种标识符。首字母小写，驼峰式命名。<br>()：方法的标志。括号里：参数列表<br>{}：方法体<br>参数列表：方法在运算过程中的未知数据，调用者调用方法时传递<br>return ：将方法执行后的结果带给调用者，方法执行到 return ，整体方法运行结束</p>
+</blockquote>
+<br>
+
+<h3 id="1-3-调用方法"><a href="#1-3-调用方法" class="headerlink" title="1.3 调用方法"></a>1.3 调用方法</h3><p>如果一个方法只有定义，那么方法中代码并没有被执行，只有被调用了才会执行方法中的代码。</p>
+<p>通过方法的名字进行调用。</p>
+<ul>
+<li>对于静态<code>static</code>方法，调用方法如下<ul>
+<li><code>类名.方法名()</code></li>
+<li>调用当前类中的静态方法时，类名可以省略</li>
+</ul>
+</li>
+<li>对于非静态的方法<ul>
+<li>需要创建该类的对象，通过对象调用方法</li>
+<li><code>ClassName objectName = new ClassName();</code></li>
+<li><code>objectName.method();</code></li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h3 id="1-4-方法返回值"><a href="#1-4-方法返回值" class="headerlink" title="1.4 方法返回值"></a>1.4 方法返回值</h3><p>如果一个方法调用之后，需要返回给调用处结果，那么表示这个方法有返回值，在方法中需要使用<br>return语句把结果返回给调用处。</p>
+<p>注意</p>
+<ul>
+<li>如果一个方法声明了有返回值(非void)，那么方法中一定要使用return语句返回结果。</li>
+<li>定义方法的时候，声明的返回值类型，一定要和return后实际上返回的数值类型一致。</li>
+<li>如果一个方法声明了有返回值，如果方法中有分支语句或者循环语句，那么要保证无论执行哪个分<br>支，都要有return可以被执行到。</li>
+<li>如果一个方法声明没有返回值(void)，那么方法中也可以使用return语句，用于强制结束方法的执<br>行。</li>
+</ul>
+<br>
+
+<h3 id="1-5-方法参数"><a href="#1-5-方法参数" class="headerlink" title="1.5 方法参数"></a>1.5 方法参数</h3><p>一个方法中，有些数据的数值不确定，我们定义为参数，由调用处调用方法的时候，传入具体的数<br>据。</p>
+<ul>
+<li>形式参数<ul>
+<li>定义方式，声明的参数，用于接收调用处传来的数据。</li>
+</ul>
+</li>
+<li>实际参数<ul>
+<li>调用方法的时候，实际赋值给形参的数据。</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h3 id="1-6-方法重载"><a href="#1-6-方法重载" class="headerlink" title="1.6 方法重载"></a>1.6 方法重载</h3><p>概念：一个方法的多种形式。</p>
+<ul>
+<li>同一个类中</li>
+<li>方法名相同</li>
+<li>参数列表必须不同（顺序，个数，类型）<ul>
+<li>与static，返回值，其他的修饰符……无关</li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h3 id="1-7-递归"><a href="#1-7-递归" class="headerlink" title="1.7 递归"></a>1.7 递归</h3><p>方法中调用方法本身，就叫做递归方法。</p>
+<p>递归方法一定有出口，并逐层的向出口靠近。</p>
+<ul>
+<li>递归需要满足的三个条件<ol>
+<li>一个问题的解可以分解为几个子问题的解</li>
+<li>这个问题与分解之后的子问题，除了数据规模不同，求解思路完全一样</li>
+<li>存在递归终止条件</li>
+</ol>
+</li>
+<li>如何编写递归代码<ul>
+<li>最关键的是<strong>写出递推公式，找到终止条件</strong><ol>
+<li>找到如何将大问题分解为小问题的规律</li>
+<li>并且基于此写出递推公式</li>
+<li>然后再推敲终止条件</li>
+<li>最后将递推公式和终止条件翻译成代码</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p>举例</p>
+<p>题目：假如这里有 n 个台阶，每次你可以跨 1 个台阶或者 2 个台阶，请问走这 n 个台阶有多少种走法？如果有 7 个台阶，你可以 2，2，2，1 这样子上去，也可以 1，2，1，1，2 这样子上去，总之走法有很多，那如何用编程求得总共有多少种走法呢？</p>
+<p>用公式表示：<code>f(n) = f(n-1)+f(n-2)</code></p>
+<p>递归终止条件就是 f(1)=1，f(2)=2</p>
+<p>代码实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">2</span>) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">return</span> f(n-<span class="number">1</span>) + f(n-<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><br><br></p>
+<h2 id="2-封装"><a href="#2-封装" class="headerlink" title="2. 封装"></a>2. 封装</h2><h3 id="2-1-面向对象思想概述"><a href="#2-1-面向对象思想概述" class="headerlink" title="2.1 面向对象思想概述"></a>2.1 面向对象思想概述</h3><p>面向对象编程（OOP - Object Oriented Programing）</p>
+<p><font color="ff9f44">面向对象不是一门编程语言，也不是一种语法，而是一种编程思想。</font></p>
+<p>Java语言是一种面向对象的程序设计语言，而面向对象思想是一种程序设计思想，我们在面向对象思想的指引下，使用Java语言去设计、开发计算机程序。 这里的对象泛指现实中一切事物，每种事物都具备自己的属性和行为。</p>
+<p><font color="ff9f44">面向对象思想就是在计算机程序设计过程中，参照现实中事物，将事物的属性特征、行为特征抽象出来，描述成计算机事件的设计思想。</font> 它区别于面向过程思想，强调的是通过调用对象的行为来实现功能，而不是自己一步一步的去操作实现。</p>
+<ul>
+<li>面向过程：关注的是过程。遇到一个问题时候，”我该怎么做”，一步一步实现最终的功能即可。</li>
+<li>面向对象：关注的是对象。遇到一个问题时候，”我该让谁来做”，这个谁就是我们要关注的对象。</li>
+</ul>
+<br>
+
+<h3 id="2-2-类和对象"><a href="#2-2-类和对象" class="headerlink" title="2.2 类和对象"></a>2.2 类和对象</h3><ul>
+<li>类：是一组相关属性和行为的集合。可以看成是一类事物的模板，使用事物的属性特征和行为特征来描述该类事物。</li>
+</ul>
+<p>现实中，描述一类事物：<br>    属性 ：就是该事物的状态信息。<br>    行为 ：就是该事物能够做什么。</p>
+<p>举例：小猫。<br>    属性：名字、体重、年龄、颜色。<br>    行为：走、跑、叫。</p>
+<ul>
+<li>对象 ：是一类事物的具体体现。对象是类的一个实例，必然具备该类事物的属性和行为。</li>
+</ul>
+<p>现实中，一类事物的一个实例：一只小猫。<br>举例：一只小猫。<br>    属性：tom、5kg、2 years、yellow。<br>    行为：溜墙根走、蹦跶的跑、喵喵叫。</p>
+<ul>
+<li>类与对象的关系<ul>
+<li><font color="ff9f44">类是对一类事物的描述，是抽象的</font></li>
+<li><font color="ff9f44">对象是一类事物的实例，是具体的</font></li>
+<li><font color="ff9f44">类是对象的模板，对象是类的实体</font></li>
+</ul>
+</li>
+</ul>
+<br>
+
+<h3 id="2-3-类的定义"><a href="#2-3-类的定义" class="headerlink" title="2.3 类的定义"></a>2.3 类的定义</h3><p>格式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[修饰符] <span class="class"><span class="keyword">class</span> <span class="title">ClassName</span> </span>&#123;</span><br><span class="line">    属性字段：field</span><br><span class="line">    ...</span><br><span class="line">    成员方法：method()</span><br><span class="line">    ...</span><br><span class="line">    构造方法：Constructor()</span><br><span class="line">        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>创建对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ClassName objectName = <span class="keyword">new</span> ClassName();</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>类中成员变量，和局部变量不同，有默认值。<br>基本类型：<br>int，byte，short，long，float，double,，默认值都是0；<br>char 的默认值”空字符”，也就是‘\u0000’，数值为0；<br>boolean默认值false；<br>引用类型：默认值都是null，空；</p>
+</blockquote>
+<br>
+
+<h3 id="2-4-构造函数"><a href="#2-4-构造函数" class="headerlink" title="2.4 构造函数"></a>2.4 构造函数</h3><p>构造方法是一种特殊的方法.</p>
+<ol>
+<li>定义的语法结构不同</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[访问权限修饰符] 方法名(参数列表) &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修饰符：访问权限修饰符</li>
+<li>没有返回值类型，也不写void</li>
+<li>方法名：必须和类名一致</li>
+<li>参数：<ul>
+<li>没有参数：无参构造</li>
+<li>有参数列表：有参构造</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>调用方法不同<ul>
+<li>通过new关键字调用</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Constructor();</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>作用不同：专门用于创建对象</li>
+</ol>
+<blockquote>
+<p>注意：如果一个类中，没有写构造方法，那么当创建对象的时候，编译器会自动添加一个无参的构造方法。但<br>是如果类中写了构造方法，那么编译器不再自动添加无参构造方法。</p>
+</blockquote>
+<br>
+
+<h3 id="2-5-this-关键字"><a href="#2-5-this-关键字" class="headerlink" title="2.5 this 关键字"></a>2.5 this 关键字</h3><p>this代表所在类的当前对象的引用（地址值），即对象自己的引用。</p>
+<p><font color="ff9f44">方法被哪个对象调用，方法中的this就代表那个对象。即谁在调用，this就代表谁。</font></p>
+<p>用途一：当局部变量和成员变量命名冲突的时候，通过<code>this</code>来区分。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name,<span class="keyword">int</span> age,String sex)</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.age = age;</span><br><span class="line">    <span class="keyword">this</span>.sex = sex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>用途二：访问本类的属性和方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.field;</span><br><span class="line"><span class="keyword">this</span>.method();</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<p>用途三：指代构造方法：<code>this();</code></p>
+<p>如果存在多个构造方法，那么this指代的构造方法要靠参数来区分：顺序，个数，类型。</p>
+<blockquote>
+<p>注意：this指向构造函数的时候，只能放在第一句。</p>
+</blockquote>
+<p>举例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.NoSuchElementException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> AnthonyCJ</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span> 自己手动实现ArrayList</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022/12/01 9:52</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyArrayList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">implements</span> <span class="title">Iterable</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">// 真正存储数据</span></span><br><span class="line">    <span class="keyword">private</span> E[] data;</span><br><span class="line">    <span class="comment">// 记录当前数组中元素的个数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line">    <span class="comment">// 默认初始容量</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INIT_CAP = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyArrayList</span><span class="params">()</span> </span>&#123; <span class="keyword">this</span>(INIT_CAP); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyArrayList</span><span class="params">(<span class="keyword">int</span> initCapacity)</span> </span>&#123;</span><br><span class="line">        data = (E[]) <span class="keyword">new</span> Object[initCapacity];</span><br><span class="line">        size = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<br>
+
+<h3 id="2-6-面向对象三大特性之封装"><a href="#2-6-面向对象三大特性之封装" class="headerlink" title="2.6 面向对象三大特性之封装"></a>2.6 面向对象三大特性之封装</h3><p>面向有三大特性：封装，继承，多态。</p>
+<p><strong>封装性</strong>：尽可能隐藏对象的内部实现细节，控制对象的修改及访问的权限。</p>
+<p>面向对象编程语言是对客观世界的模拟，客观世界里成员变量都是隐藏在对象内部的，外界无法直接操作和修改。</p>
+<p>封装可以被认为是一个保护屏障，防止该类的代码和数据被其他类随意访问。要访问该类的数据，必须通过指定的方式。适当的封装可以让代码更容易理解与维护，也加强了代码的安全性。</p>
+<ol>
+<li>隐藏了实现的细节</li>
+<li>提高了代码的复用性</li>
+<li>提高了安全性</li>
+</ol>
+<ul>
+<li>封装步骤<ol>
+<li>使用<code>private</code>修饰符来修饰属性。限于本类中访问</li>
+<li>在类中提供<code>getters</code>和<code>setters</code>用于对属性进行赋值和取值<ul>
+<li>注意它们的修饰符，如果都是public，那么实际上和没有封装是一样的，可以通过对象调用方法随意地修改属性</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<br>
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>用爱发电，无需打赏哦~</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>AnthonyCJ
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://anthonycj.github.io/2022/12/01/JavaSE-3-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-1/" title="JavaSE-3-面向对象-1">https://anthonycj.github.io/2022/12/01/JavaSE-3-面向对象-1/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/JavaSE/" rel="tag"># JavaSE</a>
+              <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" rel="tag"># 面向对象</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/01/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%95%B0%E7%BB%84-%E7%89%B9%E6%80%A7%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0/" rel="prev" title="数据结构-数组-特性及代码实现">
+      <i class="fa fa-chevron-left"></i> 数据结构-数组-特性及代码实现
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/01/JavaSE-4-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-2/" rel="next" title="JavaSE-4-面向对象-2">
+      JavaSE-4-面向对象-2 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Java%E6%96%B9%E6%B3%95%EF%BC%88%E5%87%BD%E6%95%B0%EF%BC%89"><span class="nav-text">1. Java方法（函数）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E6%A6%82%E5%BF%B5"><span class="nav-text">1.1 概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95"><span class="nav-text">1.2 定义方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E8%B0%83%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-text">1.3 调用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E6%96%B9%E6%B3%95%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-text">1.4 方法返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0"><span class="nav-text">1.5 方法参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-%E6%96%B9%E6%B3%95%E9%87%8D%E8%BD%BD"><span class="nav-text">1.6 方法重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-%E9%80%92%E5%BD%92"><span class="nav-text">1.7 递归</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%B0%81%E8%A3%85"><span class="nav-text">2. 封装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%80%9D%E6%83%B3%E6%A6%82%E8%BF%B0"><span class="nav-text">2.1 面向对象思想概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1"><span class="nav-text">2.2 类和对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E7%B1%BB%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-text">2.3 类的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-text">2.4 构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-this-%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-text">2.5 this 关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7%E4%B9%8B%E5%B0%81%E8%A3%85"><span class="nav-text">2.6 面向对象三大特性之封装</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="AnthonyCJ"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">AnthonyCJ</p>
+  <div class="site-description" itemprop="description">我要起飞啦~</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AnthonyCJ" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AnthonyCJ" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:778018549@qq.com" title="E-Mail → mailto:778018549@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://tzhiy.github.io/" title="https:&#x2F;&#x2F;tzhiy.github.io&#x2F;" rel="noopener" target="_blank">tzhiy's Blog</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">AnthnyCJ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">200k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:01</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '411874b2926fe6004f3c',
+      clientSecret: '987b06cb2dc513f7832324118eabb377e21f8e74',
+      repo        : 'gitalk-comment',
+      owner       : 'AnthonyCJ',
+      admin       : ['AnthonyCJ'],
+      id          : '9fa023532b12d401daf064545c83acd5',
+        language: '',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+
+  <script async src="/js/cursor/love.min.js"></script>
+
+
+
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = false;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+<!--jquery-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":1},"log":false});</script></body>
+</html>
+
+<!-- 页面点击心形 -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+
+<!--崩溃欺骗-->
+<!-- <script type="text/javascript" src="/js/crash_cheat.js"></script> -->
